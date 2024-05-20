@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public enum SceneGame
 {
-    Mainmenu,
+    Menu,
     Gameplay
 }
 
@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
         switch (scene)
         {
-            case SceneGame.Mainmenu:
-                sceneName = "MainMenu";
+            case SceneGame.Menu:
+                sceneName = "Menu";
                 break;
             case SceneGame.Gameplay:
                 sceneName = "Gameplay";

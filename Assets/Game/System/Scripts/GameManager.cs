@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public enum SceneGame
 {
     Menu,
-    Gameplay
+    Shooter
 }
 
 public class GameManager : MonoBehaviourSingleton<GameManager>
@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
             case SceneGame.Menu:
                 sceneName = "Menu";
                 break;
-            case SceneGame.Gameplay:
-                sceneName = "Gameplay";
+            case SceneGame.Shooter:
+                sceneName = "Shooter";
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(scene), scene, null);

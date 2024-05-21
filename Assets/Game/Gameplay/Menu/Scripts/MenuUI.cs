@@ -14,7 +14,7 @@ public class MenuUI : MonoBehaviour
 
     private void PlayGame()
     {
-        GameManager.Get().ChangeScene(SceneGame.Gameplay);
+        GameManager.Get().ChangeScene(SceneGame.Shooter);
     }
 
     private void ExitGame()

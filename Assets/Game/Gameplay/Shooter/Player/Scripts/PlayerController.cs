@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float mass = 1f;
 
     private CharacterController characterController = null;
+
+    private Vector2 move = Vector2.zero;
 
     private float fallVelocity = 0f;
 
@@ -18,6 +21,11 @@ public class PlayerController : MonoBehaviour
     {
         ApplyGravity();
         Movement();
+    }
+
+    public void OnMove(InputValue value)
+    {
+        move = value.Get<Vector2>();
     }
 
     private void ApplyGravity()
@@ -34,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
-        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), fallVelocity, Input.GetAxis("Vertical"));
+        Vector3 movement = new Vector3(move.x, fallVelocity, move.y);
 
         characterController.Move(movement * Time.deltaTime * speed);
     }

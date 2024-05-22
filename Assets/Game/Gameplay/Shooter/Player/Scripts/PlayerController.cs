@@ -9,33 +9,39 @@ public class PlayerController : MonoBehaviour
 
     [Header("Reference Settings"), Space]
     [SerializeField] private Transform body = null;
-    [SerializeField] private Animator animator = null;
+    [SerializeField] private PlayerLocomotionController locomotionController = null;
 
     [Header("Arrow Settings"), Space]
     [SerializeField] private ArrowController arrowController = null;
     [SerializeField] private float arrowForce = 0f;
 
+    private PlayerInput inputAction = null;
     private CharacterController characterController = null;
     private Camera mainCamera = null;
+
     private Vector2 move = Vector2.zero;
     private float fallVelocity = 0f;
     private bool firePressed = false;
 
-    private const string speedKey = "Speed";
-
     private void Awake()
     {
+        inputAction = GetComponent<PlayerInput>();
         characterController = GetComponent<CharacterController>();
         mainCamera = Camera.main;
+    }
+
+    private void Start()
+    {
+        locomotionController.Init(FireArrow, FinishFire);
     }
 
     private void Update()
     {
         ApplyGravity();
         Movement();
-        FireArrow();
+        Attack();
 
-        UpdateAnimations();
+        locomotionController.UpdateIdleRunAnimation(move.magnitude);
     }
 
     public void OnMove(InputValue value)
@@ -85,18 +91,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FireArrow()
+    private void Attack()
     {
         if (!firePressed) return;
 
         LookAtMouse();
+        locomotionController.Attack();
 
-        arrowController.FireArrow(arrowForce, body.transform.forward);
         firePressed = false;
+        inputAction.DeactivateInput();
     }
 
-    private void UpdateAnimations()
+    private void FireArrow()
     {
-        animator.SetFloat(speedKey, move.magnitude);
+        arrowController.FireArrow(arrowForce, body.transform.forward);
+    }
+
+    private void FinishFire()
+    {
+        inputAction.ActivateInput();
     }
 }

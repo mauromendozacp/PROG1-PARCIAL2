@@ -17,8 +17,6 @@ public class ArrowController : MonoBehaviour
     public void FireArrow(float force, Vector3 direction)
     {
         ArrowItem arrow = arrowPool.Get();
-        arrow.transform.position = spawnPosition.position;
-
         arrow.FireArrow(force, direction);
     }
 
@@ -32,6 +30,7 @@ public class ArrowController : MonoBehaviour
 
     private void GetArrow(ArrowItem arrow)
     {
+        arrow.transform.position = spawnPosition.position;
         arrow.OnGet();
     }
 

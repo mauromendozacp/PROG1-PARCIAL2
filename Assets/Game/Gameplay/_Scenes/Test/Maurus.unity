@@ -663,6 +663,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4362982127363866966, guid: df2454ed0b0d6be448cd6b5a5138cfd9, type: 3}
+      propertyPath: inputAction.m_Name
+      value: Input
+      objectReference: {fileID: 0}
     - target: {fileID: 4874900873115443331, guid: df2454ed0b0d6be448cd6b5a5138cfd9, type: 3}
       propertyPath: poolHolder
       value: 

@@ -50,7 +50,9 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
-        Vector3 movement = new Vector3(move.x, fallVelocity, move.y);
+        Vector3 movement = new Vector3(move.x, 0f, move.y);
+        movement = movement.x * body.right + movement.z * body.forward;
+        movement.y = fallVelocity;
 
         characterController.Move(movement * Time.deltaTime * speed);
     }

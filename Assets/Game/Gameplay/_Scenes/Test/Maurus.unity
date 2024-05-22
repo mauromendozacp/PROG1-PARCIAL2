@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &225121792 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7728605763472585533, guid: df2454ed0b0d6be448cd6b5a5138cfd9, type: 3}
-  m_PrefabInstance: {fileID: 493787182237813855}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &974032855
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,8 +262,8 @@ GameObject:
   - component: {fileID: 1296733760}
   - component: {fileID: 1296733759}
   - component: {fileID: 1296733758}
-  m_Layer: 0
-  m_Name: Plane
+  m_Layer: 3
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -490,8 +485,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 225121792}
-  m_Follow: {fileID: 225121792}
+  m_LookAt: {fileID: 1412871620}
+  m_Follow: {fileID: 1412871620}
   m_Lens:
     FieldOfView: 60.000004
     OrthographicSize: 5
@@ -624,6 +619,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1412871620 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5332836059992932258, guid: df2454ed0b0d6be448cd6b5a5138cfd9, type: 3}
+  m_PrefabInstance: {fileID: 493787182237813855}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &493787182237813855
 PrefabInstance:
   m_ObjectHideFlags: 0

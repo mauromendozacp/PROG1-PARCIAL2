@@ -3,14 +3,16 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Animator animator = null;
     [SerializeField] private float speed = 0f;
     [SerializeField] private float mass = 1f;
 
     private CharacterController characterController = null;
 
     private Vector2 move = Vector2.zero;
-
     private float fallVelocity = 0f;
+
+    private const string speedKey = "Speed";
 
     private void Awake()
     {
@@ -21,6 +23,7 @@ public class PlayerController : MonoBehaviour
     {
         ApplyGravity();
         Movement();
+        UpdateAnimations();
     }
 
     public void OnMove(InputValue value)
@@ -45,5 +48,10 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(move.x, fallVelocity, move.y);
 
         characterController.Move(movement * Time.deltaTime * speed);
+    }
+
+    private void UpdateAnimations()
+    {
+        animator.SetFloat(speedKey, move.magnitude);
     }
 }

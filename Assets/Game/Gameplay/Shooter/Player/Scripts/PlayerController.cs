@@ -19,14 +19,14 @@ public class PlayerController : MonoBehaviour
     [Header("Reference Settings"), Space]
     [SerializeField] private Transform body = null;
     [SerializeField] private PlayerLocomotionController locomotionController = null;
+    [SerializeField] private CharacterController characterController = null;
+    [SerializeField] private Camera mainCamera = null;
 
     [Header("Arrow Settings"), Space]
     [SerializeField] private ArrowController arrowController = null;
     [SerializeField] private float arrowForce = 0f;
 
     private PlayerInput inputAction = null;
-    private CharacterController characterController = null;
-    private Camera mainCamera = null;
 
     private Vector2 move = Vector2.zero;
     private float fallVelocity = 0f;
@@ -41,8 +41,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         inputAction = GetComponent<PlayerInput>();
-        characterController = GetComponent<CharacterController>();
-        mainCamera = Camera.main;
     }
 
     private void Start()
@@ -105,7 +103,7 @@ public class PlayerController : MonoBehaviour
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
-            Vector3 direction = hit.point - transform.position;
+            Vector3 direction = hit.point - body.position;
             direction.y = 0f;
             body.forward = direction;
         }

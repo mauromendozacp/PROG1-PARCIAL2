@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("General Settings"), Space]
+    [SerializeField] private int lives = 0;
     [SerializeField] private float speed = 0f;
     [SerializeField] private float mass = 1f;
 
@@ -23,6 +24,9 @@ public class PlayerController : MonoBehaviour
     private float fallVelocity = 0f;
     private bool firePressed = false;
 
+    private int currentLives = 0;
+    private bool isDead = false;
+
     private void Awake()
     {
         inputAction = GetComponent<PlayerInput>();
@@ -33,15 +37,21 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         locomotionController.Init(FireArrow, FinishFire);
+
+        currentLives = lives;
     }
 
     private void Update()
     {
+        if (isDead) return;
+
         ApplyGravity();
         Movement();
         Attack();
 
         locomotionController.UpdateIdleRunAnimation(move.magnitude);
+
+        CheckLives();
     }
 
     public void OnMove(InputValue value)
@@ -110,5 +120,13 @@ public class PlayerController : MonoBehaviour
     private void FinishFire()
     {
         inputAction.ActivateInput();
+    }
+
+    private void CheckLives()
+    {
+        if (currentLives <= 0)
+        {
+            isDead = true;
+        }
     }
 }

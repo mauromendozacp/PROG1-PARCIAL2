@@ -1,6 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum FSM_INPUT
+{
+    ENABLE_ALL,
+    MOVEMENT,
+    ATTACK,
+    DISABLE_ALL
+}
+
 public class PlayerController : MonoBehaviour
 {
     [Header("General Settings"), Space]
@@ -27,6 +35,9 @@ public class PlayerController : MonoBehaviour
     private int currentLives = 0;
     private bool isDead = false;
 
+    private const string moveInputKey = "move";
+    private const string fireInputKey = "fire";
+
     private void Awake()
     {
         inputAction = GetComponent<PlayerInput>();
@@ -36,9 +47,10 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        locomotionController.Init(FireArrow, FinishFire);
+        locomotionController.Init(FireArrow, onEnableInput: () => UpdateInputFSM(FSM_INPUT.ENABLE_ALL));
 
         currentLives = lives;
+        UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
     }
 
     private void Update()
@@ -50,8 +62,6 @@ public class PlayerController : MonoBehaviour
         Attack();
 
         locomotionController.UpdateIdleRunAnimation(move.magnitude);
-
-        CheckLives();
     }
 
     public void OnMove(InputValue value)
@@ -104,12 +114,12 @@ public class PlayerController : MonoBehaviour
     private void Attack()
     {
         if (!firePressed) return;
+        firePressed = false;
 
         LookAtMouse();
-        locomotionController.Attack();
+        locomotionController.PlayAttackAnimation();
 
-        firePressed = false;
-        inputAction.DeactivateInput();
+        UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
     }
 
     private void FireArrow()
@@ -117,16 +127,43 @@ public class PlayerController : MonoBehaviour
         arrowController.FireArrow(arrowForce, body.transform.forward);
     }
 
-    private void FinishFire()
+    private void RecieveHit()
     {
-        inputAction.ActivateInput();
-    }
+        currentLives--;
 
-    private void CheckLives()
-    {
         if (currentLives <= 0)
         {
             isDead = true;
+            locomotionController.PlayDeadAnimation();
+            UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
+        }
+        else
+        {
+            locomotionController.PlayRecieveHitAnimation();
+            UpdateInputFSM(FSM_INPUT.MOVEMENT);
+        }
+    }
+
+    private void UpdateInputFSM(FSM_INPUT fsm)
+    {
+        switch (fsm)
+        {
+            case FSM_INPUT.ENABLE_ALL:
+                inputAction.actions[moveInputKey].Enable();
+                inputAction.actions[fireInputKey].Enable();
+                break;
+            case FSM_INPUT.MOVEMENT:
+                inputAction.actions[moveInputKey].Enable();
+                inputAction.actions[fireInputKey].Disable();
+                break;
+            case FSM_INPUT.ATTACK:
+                inputAction.actions[moveInputKey].Disable();
+                inputAction.actions[fireInputKey].Enable();
+                break;
+            case FSM_INPUT.DISABLE_ALL:
+                inputAction.actions[moveInputKey].Disable();
+                inputAction.actions[fireInputKey].Disable();
+                break;
         }
     }
 }

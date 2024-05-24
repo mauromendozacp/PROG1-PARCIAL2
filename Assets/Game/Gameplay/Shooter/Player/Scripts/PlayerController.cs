@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     [SerializeField] private Camera mainCamera = null;
 
     [Header("Arrow Settings"), Space]
-    [SerializeField] private ArrowController arrowController = null;
+    [SerializeField] private BorrowController arrowController = null;
     [SerializeField] private float arrowForce = 0f;
 
     private PlayerInput inputAction = null;

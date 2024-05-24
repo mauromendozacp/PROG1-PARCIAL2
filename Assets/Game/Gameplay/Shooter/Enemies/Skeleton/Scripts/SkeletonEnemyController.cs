@@ -14,6 +14,7 @@ public class SkeletonEnemyController : MonoBehaviour, IRecieveDamage
 {
     [Header("General Settings"), Space]
     [SerializeField] private int lives = 0;
+    [SerializeField] private int damage = 0;
     [SerializeField] private float speed = 0f;
     [SerializeField] private float distanceToAttack = 0f;
     [SerializeField] private LayerMask attackLayer = default;
@@ -36,6 +37,7 @@ public class SkeletonEnemyController : MonoBehaviour, IRecieveDamage
         agent.speed = speed;
 
         locomotionController.Init(SetIdleState);
+        currentLives = lives;
     }
 
     private void Update()
@@ -69,10 +71,9 @@ public class SkeletonEnemyController : MonoBehaviour, IRecieveDamage
 
                 break;
             case FSM_ENEMY.GO_TO_TARGET:
-                if (CheckPlayerIsOnFront())
+                if (CheckPlayerIsOnFront(out RaycastHit hit))
                 {
-                    locomotionController.PlayAttackAnimation();
-                    state = FSM_ENEMY.ATTACK;
+                    AttackTarget(hit);
                 }
                 else
                 {
@@ -92,9 +93,16 @@ public class SkeletonEnemyController : MonoBehaviour, IRecieveDamage
         agent.isStopped = state != FSM_ENEMY.GO_TO_TARGET;
     }
 
-    private bool CheckPlayerIsOnFront()
+    private bool CheckPlayerIsOnFront(out RaycastHit hit)
     {
-        return Physics.Raycast(bodyCenterTransform.position, bodyCenterTransform.forward, distanceToAttack, attackLayer);
+        if (Physics.Raycast(bodyCenterTransform.position, bodyCenterTransform.forward, out RaycastHit hitInfo, distanceToAttack, attackLayer))
+        {
+            hit = hitInfo;
+            return true;
+        }
+
+        hit = default;
+        return false;
     }
 
     private void SetIdleState()
@@ -105,6 +113,21 @@ public class SkeletonEnemyController : MonoBehaviour, IRecieveDamage
     private void ToggleCollider(bool status)
     {
         capsuleCollider.enabled = status;
+    }
+
+    private void AttackTarget(RaycastHit hit)
+    {
+        if (hit.collider.gameObject.TryGetComponent(out IRecieveDamage recieveDamage))
+        {
+            recieveDamage.RecieveDamage(damage);
+
+            locomotionController.PlayAttackAnimation();
+            state = FSM_ENEMY.ATTACK;
+        }
+        else
+        {
+            Debug.LogError("Can't attack this object: " + hit.collider.gameObject.name);
+        }
     }
 
     public void RecieveDamage(int damage)

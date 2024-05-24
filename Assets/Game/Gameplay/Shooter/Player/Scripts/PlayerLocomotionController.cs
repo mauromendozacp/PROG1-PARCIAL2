@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerLocomotionController : MonoBehaviour
 {
+    private const string deadAnimName = "Death";
+
     private const string speedKey = "Speed";
     private const string attackKey = "Attack";
-    private const string deadKey = "Death";
     private const string recieveHitKey = "RecieveHit";
 
     private Animator animator = null;
@@ -24,6 +25,22 @@ public class PlayerLocomotionController : MonoBehaviour
         this.onEnableInput = onEnableInput;
     }
 
+    public void UpdateIdleRunAnimation(float speed)
+    {
+        animator.SetFloat(speedKey, speed);
+    }
+
+    public void PlayDeadAnimation()
+    {
+        animator.Play(deadAnimName, 0);
+        animator.Play(deadAnimName, 1);
+    }
+
+    public void PlayRecieveHitAnimation()
+    {
+        animator.SetTrigger(recieveHitKey);
+    }
+
     public void PlayAttackAnimation()
     {
         animator.SetTrigger(attackKey);
@@ -37,21 +54,5 @@ public class PlayerLocomotionController : MonoBehaviour
     public void EnableInput()
     {
         onEnableInput?.Invoke();
-    }
-
-    public void UpdateIdleRunAnimation(float speed)
-    {
-        animator.SetFloat(speedKey, speed);
-    }
-
-    public void PlayDeadAnimation()
-    {
-        animator.Play(deadKey, 0);
-        animator.Play(deadKey, 1);
-    }
-
-    public void PlayRecieveHitAnimation()
-    {
-        animator.SetTrigger(recieveHitKey);
     }
 }

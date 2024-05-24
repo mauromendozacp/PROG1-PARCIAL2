@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class SkeletonLocomotionController : MonoBehaviour
 {
+    private const string idleRunAnimName = "Idle/Run";
+    private const string deadAnimName = "Death";
+
     private const string speedKey = "Speed";
     private const string attackKey = "Attack";
-    private const string deadKey = "Death";
     private const string recieveHitKey = "RecieveHit";
 
     private Animator animator = null;
@@ -22,14 +24,14 @@ public class SkeletonLocomotionController : MonoBehaviour
         this.onSetIdleState = onSetIdleState;
     }
 
-    public void PlayAttackAnimation()
-    {
-        animator.SetTrigger(attackKey);
-    }
-
     public void SetIdleState()
     {
         onSetIdleState?.Invoke();
+    }
+
+    public void PlayIdleRunAnimation()
+    {
+        animator.Play(idleRunAnimName);
     }
 
     public void UpdateIdleRunAnimation(float speed)
@@ -37,9 +39,14 @@ public class SkeletonLocomotionController : MonoBehaviour
         animator.SetFloat(speedKey, speed);
     }
 
+    public void PlayAttackAnimation()
+    {
+        animator.SetTrigger(attackKey);
+    }
+
     public void PlayDeadAnimation()
     {
-        animator.Play(deadKey);
+        animator.Play(deadAnimName);
     }
 
     public void PlayRecieveHitAnimation()

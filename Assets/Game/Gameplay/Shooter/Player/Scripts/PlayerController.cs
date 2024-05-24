@@ -9,7 +9,7 @@ public enum FSM_INPUT
     DISABLE_ALL
 }
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IRecieveDamage
 {
     [Header("General Settings"), Space]
     [SerializeField] private int lives = 0;
@@ -125,23 +125,6 @@ public class PlayerController : MonoBehaviour
         arrowController.FireArrow(arrowForce, body.transform.forward);
     }
 
-    private void RecieveHit()
-    {
-        currentLives--;
-
-        if (currentLives <= 0)
-        {
-            isDead = true;
-            locomotionController.PlayDeadAnimation();
-            UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
-        }
-        else
-        {
-            locomotionController.PlayRecieveHitAnimation();
-            UpdateInputFSM(FSM_INPUT.MOVEMENT);
-        }
-    }
-
     private void UpdateInputFSM(FSM_INPUT fsm)
     {
         switch (fsm)
@@ -162,6 +145,23 @@ public class PlayerController : MonoBehaviour
                 inputAction.actions[moveInputKey].Disable();
                 inputAction.actions[fireInputKey].Disable();
                 break;
+        }
+    }
+
+    public void RecieveDamage(int damage)
+    {
+        currentLives = Mathf.Clamp(currentLives - damage, 0, lives);
+
+        if (currentLives <= 0)
+        {
+            isDead = true;
+            locomotionController.PlayDeadAnimation();
+            UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
+        }
+        else
+        {
+            locomotionController.PlayRecieveHitAnimation();
+            UpdateInputFSM(FSM_INPUT.MOVEMENT);
         }
     }
 }

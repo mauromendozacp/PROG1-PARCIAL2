@@ -109,7 +109,7 @@ NavMeshSettings:
     agentRadius: 0.5
     agentHeight: 2
     agentSlope: 45
-    agentClimb: 0.4
+    agentClimb: 0.55
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -122,7 +122,12 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 552a57ed4b950a04a955bfb86007839a, type: 2}
+--- !u!4 &481347023 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2852485849040738490, guid: df2454ed0b0d6be448cd6b5a5138cfd9, type: 3}
+  m_PrefabInstance: {fileID: 493787182237813855}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1296733757
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,7 +145,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!64 &1296733758
 MeshCollider:
@@ -2112,6 +2117,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5041909717609993710, guid: 463c46b9ce87a204cb6afea3ee077075, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 481347023}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

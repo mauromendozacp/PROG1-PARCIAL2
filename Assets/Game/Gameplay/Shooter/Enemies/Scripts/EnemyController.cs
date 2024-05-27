@@ -44,7 +44,7 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
 
     private void OnTriggerEnter(Collider other)
     {
-        if (Utils.CheckLayerInMask(attackLayer, other.gameObject.layer))
+        if (state != FSM_ENEMY.WIN && Utils.CheckLayerInMask(attackLayer, other.gameObject.layer))
         {
             secondaryTarget = other.transform;
         }
@@ -71,6 +71,9 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
     public virtual void SetWinState()
     {
         state = FSM_ENEMY.WIN;
+
+        mainTarget = null;
+        secondaryTarget = null;
     }
 
     protected Transform GetFocusTarget()

@@ -34,6 +34,7 @@ public class SkeletonLocomotionController : MonoBehaviour
     public void PlayIdleRunAnimation()
     {
         animator.Play(idleRunAnimName);
+        UpdateIdleRunAnimation(0f);
     }
 
     public void UpdateIdleRunAnimation(float speed)

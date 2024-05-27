@@ -98,6 +98,12 @@ public class SkeletonEnemyController : EnemyController, IRecieveDamage
         }
     }
 
+    public override void SetWinState()
+    {
+        base.SetWinState();
+        locomotionController.PlayIdleRunAnimation();
+    }
+
     public override void RecieveDamage(int damage)
     {
         if (state == FSM_ENEMY.DEATH) return;

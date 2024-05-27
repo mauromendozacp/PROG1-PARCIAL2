@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class WaveController : MonoBehaviour
 {
-    [SerializeField] private EnemyPoolController enemyPoolController = null;
     [SerializeField] private float spawnDelay = 0f;
     [SerializeField] private float waveTime = 0f;
     [SerializeField] private Transform enemyMainTarget = null;
     [SerializeField] private Transform[] enemySpawns = null;
 
+    private EnemyPoolController enemyPoolController = null;
+
     private float timer = 0f;
-
-    private void Start()
-    {
-        enemyPoolController.Init();
-        enemyPoolController.SetMainTarget(enemyMainTarget);
-
-        StartWave();
-    }
 
     private void Update()
     {
         UpdateTimer();
+    }
+
+    public void Init(EnemyPoolController enemyPoolController)
+    {
+        this.enemyPoolController = enemyPoolController;
+        this.enemyPoolController.Init();
+        this.enemyPoolController.SetMainTarget(enemyMainTarget);
+
+        StartWave();
     }
 
     public void StartWave()
@@ -39,6 +41,11 @@ public class WaveController : MonoBehaviour
                 enemyPoolController.SpawnEnemy(GetRandomSpawn());
             }
         }
+    }
+
+    public void StopWave()
+    {
+        StopAllCoroutines();
     }
 
     private Vector3 GetRandomSpawn()

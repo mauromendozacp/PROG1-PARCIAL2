@@ -54,6 +54,8 @@ public class SkeletonEnemyController : EnemyController, IRecieveDamage
                 break;
             case FSM_ENEMY.DEATH:
                 break;
+            case FSM_ENEMY.WIN:
+                break;
         }
 
         agent.isStopped = state != FSM_ENEMY.GO_TO_TARGET;

@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -34,7 +36,8 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     private bool firePressed = false;
 
     private int currentLives = 0;
-    private bool isDead = false;
+
+    private Action onDeath = null;
 
     private const string moveInputKey = "move";
     private const string fireInputKey = "fire";
@@ -44,23 +47,25 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         inputAction = GetComponent<PlayerInput>();
     }
 
-    private void Start()
-    {
-        locomotionController.Init(FireArrow, onEnableInput: () => UpdateInputFSM(FSM_INPUT.ENABLE_ALL));
-
-        currentLives = lives;
-        UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
-    }
-
     private void Update()
     {
-        if (isDead) return;
+        if (CheckIsDead()) return;
 
         ApplyGravity();
         Movement();
         Attack();
 
         locomotionController.UpdateIdleRunAnimation(move.magnitude);
+    }
+
+    public void Init(Action onDeath)
+    {
+        this.onDeath = onDeath;
+
+        locomotionController.Init(FireArrow, onEnableInput: () => UpdateInputFSM(FSM_INPUT.ENABLE_ALL));
+
+        currentLives = lives;
+        UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
     }
 
     public void OnMove(InputValue value)
@@ -149,15 +154,21 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         }
     }
 
+    private bool CheckIsDead()
+    {
+        return currentLives <= 0;
+    }
+
     public void RecieveDamage(int damage)
     {
         currentLives = Mathf.Clamp(currentLives - damage, 0, lives);
 
-        if (currentLives <= 0)
+        if (CheckIsDead())
         {
-            isDead = true;
+            characterController.enabled = false;
             locomotionController.PlayDeadAnimation();
             UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
+            onDeath?.Invoke();
         }
         else
         {

@@ -12,6 +12,8 @@ public class EnemyPoolController : MonoBehaviour
     private List<EnemyController> enemyList = null;
     private Transform enemyMainTarget = null;
 
+    public List<EnemyController> EnemyList => enemyList;
+
     public void Init()
     {
         enemyPool = new ObjectPool<EnemyController>(CreateEnemy, GetEnemy, ReleaseEnemy, DestroyEnemy);

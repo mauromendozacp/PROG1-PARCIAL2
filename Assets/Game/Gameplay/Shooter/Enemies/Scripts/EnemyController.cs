@@ -9,7 +9,8 @@ public enum FSM_ENEMY
     GO_TO_TARGET,
     ATTACK,
     RECIEVE_DAMAGE,
-    DEATH
+    DEATH,
+    WIN
 }
 
 public abstract class EnemyController : MonoBehaviour, IRecieveDamage
@@ -65,6 +66,11 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
     public void SetMainTarget(Transform mainTarget)
     {
         this.mainTarget = mainTarget;
+    }
+
+    public virtual void SetWinState()
+    {
+        state = FSM_ENEMY.WIN;
     }
 
     protected Transform GetFocusTarget()

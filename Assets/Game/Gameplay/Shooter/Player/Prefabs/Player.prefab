@@ -348,6 +348,9 @@ MonoBehaviour:
   lives: 10
   speed: 15
   mass: 1
+  attackLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
   body: {fileID: 8774147757880241799}
   locomotionController: {fileID: 729923736805070328}
   characterController: {fileID: 5386336610017871704}

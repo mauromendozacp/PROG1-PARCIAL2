@@ -23,7 +23,7 @@ public class SkeletonEnemyController : EnemyController, IRecieveDamage
         {
             case FSM_ENEMY.IDLE:
                 locomotionController.UpdateIdleRunAnimation(0f);
-                if (target != null)
+                if (GetFocusTarget() != null)
                 {
                     state = FSM_ENEMY.GO_TO_TARGET;
                 }
@@ -36,8 +36,15 @@ public class SkeletonEnemyController : EnemyController, IRecieveDamage
                 }
                 else
                 {
-                    locomotionController.UpdateIdleRunAnimation(1f);
-                    agent.SetDestination(target.position);
+                    if (GetFocusTarget() != null)
+                    {
+                        locomotionController.UpdateIdleRunAnimation(1f);
+                        agent.SetDestination(GetFocusTarget().position);
+                    }
+                    else
+                    {
+                        state = FSM_ENEMY.IDLE;
+                    }
                 }
 
                 break;

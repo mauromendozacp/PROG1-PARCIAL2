@@ -22,7 +22,8 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
     [SerializeField] protected LayerMask attackLayer = default;
 
     protected NavMeshAgent agent = null;
-    protected Transform target = null;
+    protected Transform mainTarget = null;
+    protected Transform secondaryTarget = null;
 
     protected FSM_ENEMY state = default;
     protected int currentLives = 0;
@@ -40,14 +41,35 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
         UpdateFSM();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (Utils.CheckLayerInMask(attackLayer, other.gameObject.layer))
+        {
+            secondaryTarget = other.transform;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (secondaryTarget == other.transform)
+        {
+            secondaryTarget = null;
+        }
+    }
+
     public void Init(Action<EnemyController> onRelease)
     {
         this.onRelease = onRelease;
     }
 
-    public void SetTarget(Transform target)
+    public void SetMainTarget(Transform mainTarget)
     {
-        this.target = target;
+        this.mainTarget = mainTarget;
+    }
+
+    protected Transform GetFocusTarget()
+    {
+        return secondaryTarget != null ? secondaryTarget : mainTarget;
     }
 
     public abstract void RecieveDamage(int damage);

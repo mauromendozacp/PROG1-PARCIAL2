@@ -10,8 +10,9 @@ public class EnemyPoolController : MonoBehaviour
 
     private ObjectPool<EnemyController> enemyPool = null;
     private List<EnemyController> enemyList = null;
+    private Transform enemyMainTarget = null;
 
-    private void Start()
+    public void Init()
     {
         enemyPool = new ObjectPool<EnemyController>(CreateEnemy, GetEnemy, ReleaseEnemy, DestroyEnemy);
         enemyList = new List<EnemyController>();
@@ -21,6 +22,13 @@ public class EnemyPoolController : MonoBehaviour
     {
         EnemyController enemy = enemyPool.Get();
         enemy.transform.position = spawnPosition;
+    }
+
+    public void SetMainTarget(Transform enemyMainTarget)
+    {
+        this.enemyMainTarget = enemyMainTarget;
+
+        enemyList.ForEach((enemy) => enemy.SetMainTarget(enemyMainTarget));
     }
 
     private EnemyController CreateEnemy()
@@ -33,6 +41,7 @@ public class EnemyPoolController : MonoBehaviour
 
     private void GetEnemy(EnemyController enemy)
     {
+        enemy.SetMainTarget(enemyMainTarget);
         enemy.OnGet();
         enemyList.Add(enemy);
     }

@@ -13,15 +13,17 @@ public class SkeletonLocomotionController : MonoBehaviour
 
     private Animator animator = null;
     private Action onSetIdleState = null;
+    private Action onFinishDeath = null;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
     }
 
-    public void Init(Action onSetIdleState)
+    public void Init(Action onSetIdleState, Action onFinishDeath)
     {
         this.onSetIdleState = onSetIdleState;
+        this.onFinishDeath = onFinishDeath;
     }
 
     public void SetIdleState()
@@ -52,5 +54,10 @@ public class SkeletonLocomotionController : MonoBehaviour
     public void PlayRecieveHitAnimation()
     {
         animator.SetTrigger(recieveHitKey);
+    }
+
+    public void OnFinishDeath()
+    {
+        onFinishDeath?.Invoke();
     }
 }

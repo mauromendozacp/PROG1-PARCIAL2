@@ -1,64 +1,23 @@
 using UnityEngine;
-using UnityEngine.AI;
 
-public enum FSM_ENEMY
+public class SkeletonEnemyController : EnemyController, IRecieveDamage
 {
-    IDLE,
-    GO_TO_TARGET,
-    ATTACK,
-    RECIEVE_DAMAGE,
-    DEATH
-}
-
-public class SkeletonEnemyController : MonoBehaviour, IRecieveDamage
-{
-    [Header("General Settings"), Space]
-    [SerializeField] private int lives = 0;
-    [SerializeField] private int damage = 0;
-    [SerializeField] private float speed = 0f;
-    [SerializeField] private float distanceToAttack = 0f;
-    [SerializeField] private LayerMask attackLayer = default;
-
     [Header("Reference Settings"), Space]
     [SerializeField] private SkeletonLocomotionController locomotionController = null;
     [SerializeField] private Transform bodyCenterTransform = null;
 
     private CapsuleCollider capsuleCollider = null;
-    private NavMeshAgent agent = null;
-    [SerializeField] private Transform target = null;
 
-    private FSM_ENEMY state = default;
-    private int currentLives = 0;
-
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         capsuleCollider = GetComponent<CapsuleCollider>();
-        agent = GetComponent<NavMeshAgent>();
-        agent.speed = speed;
 
         locomotionController.Init(SetIdleState);
-        currentLives = lives;
     }
 
-    private void Update()
-    {
-        UpdateFSM();
-    }
-
-    public void Init(Transform target)
-    {
-        this.target = target;
-    }
-
-    public void Spawn()
-    {
-        currentLives = lives;
-        ToggleCollider(true);
-        locomotionController.PlayIdleRunAnimation();
-        state = FSM_ENEMY.IDLE;
-    }
-
-    private void UpdateFSM()
+    protected override void UpdateFSM()
     {
         switch (state)
         {
@@ -130,7 +89,7 @@ public class SkeletonEnemyController : MonoBehaviour, IRecieveDamage
         }
     }
 
-    public void RecieveDamage(int damage)
+    public override void RecieveDamage(int damage)
     {
         if (state == FSM_ENEMY.DEATH) return;
 
@@ -147,5 +106,13 @@ public class SkeletonEnemyController : MonoBehaviour, IRecieveDamage
             locomotionController.PlayRecieveHitAnimation();
             state = FSM_ENEMY.RECIEVE_DAMAGE;
         }
+    }
+
+    public override void OnGet()
+    {
+        ToggleCollider(true);
+        locomotionController.PlayIdleRunAnimation();
+
+        base.OnGet();
     }
 }

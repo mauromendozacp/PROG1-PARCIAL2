@@ -68,6 +68,29 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
     }
 
+    public void UpdateInputFSM(FSM_INPUT fsm)
+    {
+        switch (fsm)
+        {
+            case FSM_INPUT.ENABLE_ALL:
+                inputAction.actions[moveInputKey].Enable();
+                inputAction.actions[fireInputKey].Enable();
+                break;
+            case FSM_INPUT.MOVEMENT:
+                inputAction.actions[moveInputKey].Enable();
+                inputAction.actions[fireInputKey].Disable();
+                break;
+            case FSM_INPUT.ATTACK:
+                inputAction.actions[moveInputKey].Disable();
+                inputAction.actions[fireInputKey].Enable();
+                break;
+            case FSM_INPUT.DISABLE_ALL:
+                inputAction.actions[moveInputKey].Disable();
+                inputAction.actions[fireInputKey].Disable();
+                break;
+        }
+    }
+
     public void OnMove(InputValue value)
     {
         move = value.Get<Vector2>();
@@ -131,29 +154,6 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         arrowController.FireArrow(arrowForce, body.transform.forward);
     }
 
-    private void UpdateInputFSM(FSM_INPUT fsm)
-    {
-        switch (fsm)
-        {
-            case FSM_INPUT.ENABLE_ALL:
-                inputAction.actions[moveInputKey].Enable();
-                inputAction.actions[fireInputKey].Enable();
-                break;
-            case FSM_INPUT.MOVEMENT:
-                inputAction.actions[moveInputKey].Enable();
-                inputAction.actions[fireInputKey].Disable();
-                break;
-            case FSM_INPUT.ATTACK:
-                inputAction.actions[moveInputKey].Disable();
-                inputAction.actions[fireInputKey].Enable();
-                break;
-            case FSM_INPUT.DISABLE_ALL:
-                inputAction.actions[moveInputKey].Disable();
-                inputAction.actions[fireInputKey].Disable();
-                break;
-        }
-    }
-
     private bool CheckIsDead()
     {
         return currentLives <= 0;
@@ -167,7 +167,6 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         {
             characterController.enabled = false;
             locomotionController.PlayDeadAnimation();
-            UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
             onDeath?.Invoke();
         }
         else

@@ -481,7 +481,7 @@ MonoBehaviour:
   distanceToAttack: 1
   attackLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 320
   locomotionController: {fileID: 7811050923439172246}
   bodyCenterTransform: {fileID: 3522290904661424579}
 --- !u!195 &2543676812988738540

@@ -6,7 +6,6 @@ public class WaveController : MonoBehaviour
 {
     [SerializeField] private float spawnDelay = 0f;
     [SerializeField] private float waveTime = 0f;
-    [SerializeField] private Transform enemyMainTarget = null;
     [SerializeField] private Transform[] enemySpawns = null;
 
     private EnemyPoolController enemyPoolController = null;
@@ -18,7 +17,7 @@ public class WaveController : MonoBehaviour
         UpdateTimer();
     }
 
-    public void Init(EnemyPoolController enemyPoolController)
+    public void Init(EnemyPoolController enemyPoolController, Transform enemyMainTarget)
     {
         this.enemyPoolController = enemyPoolController;
         this.enemyPoolController.Init();

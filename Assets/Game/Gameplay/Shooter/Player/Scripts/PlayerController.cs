@@ -47,6 +47,14 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         inputAction = GetComponent<PlayerInput>();
     }
 
+    private void Start()
+    {
+        locomotionController.Init(FireArrow, onEnableInput: () => UpdateInputFSM(FSM_INPUT.ENABLE_ALL));
+
+        currentLives = lives;
+        UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
+    }
+
     private void Update()
     {
         if (CheckIsDead()) return;
@@ -61,11 +69,6 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     public void Init(Action onDeath)
     {
         this.onDeath = onDeath;
-
-        locomotionController.Init(FireArrow, onEnableInput: () => UpdateInputFSM(FSM_INPUT.ENABLE_ALL));
-
-        currentLives = lives;
-        UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
     }
 
     public void UpdateInputFSM(FSM_INPUT fsm)

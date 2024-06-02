@@ -489,13 +489,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1332745161}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fee04ac5ffe7a24d9800716ce564c4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 0}
-  gameplayUI: {fileID: 0}
+  waveController: {fileID: 0}
+  enemyPoolController: {fileID: 0}
+  runeController: {fileID: 0}
 --- !u!1 &1559179808
 GameObject:
   m_ObjectHideFlags: 0

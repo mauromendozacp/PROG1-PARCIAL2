@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     [SerializeField] private int lives = 0;
     [SerializeField] private float speed = 0f;
     [SerializeField] private float mass = 1f;
+    [SerializeField] private float rotationSpeed = 0f;
     [SerializeField] private LayerMask attackLayer = default;
 
     [Header("Reference Settings"), Space]
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     private Vector2 move = Vector2.zero;
     private float fallVelocity = 0f;
     private bool firePressed = false;
+    private Vector3 currentDir = Vector3.zero;
 
     private int currentLives = 0;
 
@@ -62,6 +64,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         ApplyGravity();
         Movement();
         Attack();
+        UpdateRotation();
 
         locomotionController.UpdateIdleRunAnimation(move.magnitude);
     }
@@ -122,7 +125,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
         if (move.magnitude > Mathf.Epsilon)
         {
-            body.forward = movement;
+            currentDir = movement;
         }
 
         movement.y = fallVelocity;
@@ -137,7 +140,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         {
             Vector3 direction = hit.point - body.position;
             direction.y = 0f;
-            body.forward = direction;
+            currentDir = direction;
         }
     }
 
@@ -155,6 +158,15 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     private void FireArrow()
     {
         arrowController.FireArrow(arrowForce, body.transform.forward);
+    }
+
+    private void UpdateRotation()
+    {
+        if (currentDir.magnitude > Mathf.Epsilon)
+        {
+            Quaternion toRot = Quaternion.LookRotation(currentDir, Vector3.up);
+            body.rotation = Quaternion.RotateTowards(body.rotation, toRot, rotationSpeed * Time.deltaTime);
+        }
     }
 
     private bool CheckIsDead()

@@ -348,6 +348,7 @@ MonoBehaviour:
   lives: 10
   speed: 15
   mass: 1
+  rotationSpeed: 720
   attackLayer:
     serializedVersion: 2
     m_Bits: 4294967295

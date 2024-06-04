@@ -2177,7 +2177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265b5dbe9f75f11479ed2eb56f39a023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicEvent: {fileID: 0}
+  musicEvent: {fileID: 11400000, guid: 943ed7bb4d401244c8f03d3c35dc21b9, type: 2}
+  playSoundEvent: {fileID: 11400000, guid: 3979078361fdfa14aa47dc34f8a6e95d, type: 2}
   playBtn: {fileID: 2765804962169847644}
   optionsBtn: {fileID: 1048549407}
   creditsBtn: {fileID: 529012685}

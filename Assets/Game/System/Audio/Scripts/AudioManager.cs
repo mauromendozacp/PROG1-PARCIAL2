@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -24,6 +25,7 @@ public class AudioManager : MonoBehaviour
     private bool musicEnabled = false;
 
     private AudioEvent currentMusicEvent = null;
+    private bool isStopingMusic = false;
 
     public const string masterMixerName = "Master";
     public const string musicMixerName = "Music";
@@ -48,6 +50,9 @@ public class AudioManager : MonoBehaviour
 
         sfxAudioSourcesPool = new ObjectPool<AudioSfx>(GenerateSFXSource, GetSFXSource, ReleaseSFXSource);
         activeSfxAudioSources = new List<AudioSfx>();
+
+        sfxEnabled = true;
+        musicEnabled = true;
     }
 
     public void PlayAudio(AudioEvent audioEvent)
@@ -66,51 +71,37 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(AudioEvent audioEvent)
+    private void PlaySFX(AudioEvent audioEvent)
     {
-        if (sfxEnabled)
+        if (!sfxEnabled) return;
+
+        AudioSfx audio = sfxAudioSourcesPool.Get();
+        audio.SetAudioValues(audioEvent);
+
+        ToggleSFX(sfxEnabled);
+
+        IEnumerator ReleaseSource()
         {
-            AudioSfx audio = sfxAudioSourcesPool.Get();
-            audio.SetAudioValues(audioEvent);
-
-            ToggleSFX(sfxEnabled);
-
-            IEnumerator ReleaseSource()
-            {
-                yield return new WaitForSecondsRealtime(audioEvent.Clip.length);
-                sfxAudioSourcesPool.Release(audio);
-            }
-
-            StartCoroutine(ReleaseSource());
+            yield return new WaitForSecondsRealtime(audioEvent.Clip.length);
+            sfxAudioSourcesPool.Release(audio);
         }
+
+        StartCoroutine(ReleaseSource());
     }
 
-    public void PlayMusic(AudioEvent audioEvent)
+    private void PlayMusic(AudioEvent audioEvent)
     {
-        StartCoroutine(TransitionMusicCoroutine());
-        IEnumerator TransitionMusicCoroutine()
+        if (!musicEnabled) return;
+
+        StopCurrentMusic(onSuccess: () => { StartCoroutine(StartMusicCoroutine()); });
+        IEnumerator StartMusicCoroutine()
         {
-            float timer = 0f;
-
-            if (currentMusicEvent != null)
-            {
-                while (timer < musicLerpTime)
-                {
-                    timer += Time.deltaTime;
-
-                    float musicVolume = Mathf.Lerp(currentMusicEvent.Volume, defaultMinMixerVolume, timer / musicLerpTime);
-                    audioMixerGroupsDic[musicMixerName].audioMixer.SetFloat(musicVolumeParameter, musicVolume);
-
-                    yield return new WaitForEndOfFrame();
-                }
-            }
-
-            audioMixerGroupsDic[musicMixerName].audioMixer.SetFloat(musicVolumeParameter, defaultMinMixerVolume);
+            currentMusicEvent = audioEvent;
             musicAudioSource.clip = audioEvent.Clip;
             musicAudioSource.volume = audioEvent.Volume;
-            currentMusicEvent = audioEvent;
+            musicAudioSource.Play();
 
-            timer = 0f;
+            float timer = 0f;
             while (timer < musicLerpTime)
             {
                 timer += Time.deltaTime;
@@ -122,6 +113,40 @@ public class AudioManager : MonoBehaviour
             }
 
             audioMixerGroupsDic[musicMixerName].audioMixer.SetFloat(musicVolumeParameter, defaultMaxMixerVolume);
+        }
+    }
+
+    public void StopCurrentMusic(Action onSuccess = null)
+    {
+        StartCoroutine(StopMusicCoroutine());
+        IEnumerator StopMusicCoroutine()
+        {
+            if (currentMusicEvent == null || isStopingMusic)
+            {
+                yield return new WaitUntil(predicate: () => !isStopingMusic);
+            }
+            else
+            {
+                float timer = 0f;
+                isStopingMusic = true;
+                
+                while (timer < musicLerpTime)
+                {
+                    timer += Time.deltaTime;
+
+                    float musicVolume = Mathf.Lerp(currentMusicEvent.Volume, defaultMinMixerVolume, timer / musicLerpTime);
+                    audioMixerGroupsDic[musicMixerName].audioMixer.SetFloat(musicVolumeParameter, musicVolume);
+
+                    yield return new WaitForEndOfFrame();
+                }
+                audioMixerGroupsDic[musicMixerName].audioMixer.SetFloat(musicVolumeParameter, defaultMinMixerVolume);
+
+                currentMusicEvent = null;
+                musicAudioSource.Stop();
+                isStopingMusic = false;
+            }
+
+            onSuccess?.Invoke();
         }
     }
 

@@ -16,13 +16,19 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public LoadingManager LoadingManager => loadingManager;
     public AudioManager AudioManager => audioManager;
 
-    private void Start()
+    public override void Awake()
     {
-        loadingManager.LoadingScene(SceneGame.Loading);
+        if (instance == null)
+        {
+            loadingManager.LoadingScene(SceneGame.Loading);
+        }
+
+        base.Awake();
     }
 
     public void ChangeScene(SceneGame nextScene)
     {
+        audioManager.StopCurrentMusic();
         loadingManager.TransitionScene(nextScene);
     }
 }

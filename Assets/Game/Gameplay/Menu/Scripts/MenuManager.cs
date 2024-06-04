@@ -3,8 +3,9 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    [Header("Main Configuration")]
+    [Header("Music Configuration")]
     [SerializeField] private AudioEvent musicEvent = null;
+    [SerializeField] private AudioEvent playSoundEvent = null;
 
     [Header("Buttons Configuration")]
     [SerializeField] private Button playBtn = null;
@@ -34,6 +35,7 @@ public class MenuManager : MonoBehaviour
 
     private void PlayGame()
     {
+        GameManager.Instance.AudioManager.PlayAudio(playSoundEvent);
         GameManager.Instance.ChangeScene(SceneGame.Shooter);
     }
 

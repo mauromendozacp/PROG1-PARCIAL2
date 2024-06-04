@@ -10,7 +10,7 @@ public class LoadingUI : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.Get().LoadingManager.SetLoadingUI(this);
+        GameManager.Instance.LoadingManager.SetLoadingUI(this);
     }
 
     public void ToggleUI(bool status, Action onComplete = null)

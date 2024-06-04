@@ -4,10 +4,7 @@ public class MonoBehaviourSingleton<T> : MonoBehaviour where T : Component
 {
     protected static T instance;
 
-    public static T Get()
-    {
-        return instance;
-    }
+    public static T Instance => instance;
 
     public virtual void Awake()
     {

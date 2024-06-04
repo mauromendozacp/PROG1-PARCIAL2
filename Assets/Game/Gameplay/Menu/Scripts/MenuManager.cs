@@ -1,24 +1,29 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuUI : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
-    [Header("Main Buttons Configurations")]
+    [Header("Main Configuration")]
+    [SerializeField] private AudioEvent musicEvent = null;
+
+    [Header("Buttons Configuration")]
     [SerializeField] private Button playBtn = null;
     [SerializeField] private Button optionsBtn = null;
     [SerializeField] private Button creditsBtn = null;
     [SerializeField] private Button exitBtn = null;
 
-    [Header("Extra Panel Configurations")]
+    [Header("Extra Panel Configuration")]
     [SerializeField] private GameObject optionsPanel = null;
     [SerializeField] private GameObject creditsPanel = null;
 
-    [Header("Extra Buttons Configurations")]
+    [Header("Extra Buttons Configuration")]
     [SerializeField] private Button closeOptionsBtn = null;
     [SerializeField] private Button closeCreditsBtn = null;
 
     private void Start()
     {
+        GameManager.Instance.AudioManager.PlayAudio(musicEvent);
+
         playBtn.onClick.AddListener(PlayGame);
         optionsBtn.onClick.AddListener(() => ToggleOptionsPanel(true));
         creditsBtn.onClick.AddListener(() => ToggleOptionsCredits(true));
@@ -29,7 +34,7 @@ public class MenuUI : MonoBehaviour
 
     private void PlayGame()
     {
-        GameManager.Get().ChangeScene(SceneGame.Shooter);
+        GameManager.Instance.ChangeScene(SceneGame.Shooter);
     }
 
     private void ToggleOptionsPanel(bool status)

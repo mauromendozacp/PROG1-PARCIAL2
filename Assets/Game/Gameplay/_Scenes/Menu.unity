@@ -2056,7 +2056,6 @@ GameObject:
   - component: {fileID: 1885660365}
   - component: {fileID: 1885660364}
   - component: {fileID: 1885660363}
-  - component: {fileID: 1885660367}
   m_Layer: 5
   m_Name: MenuUI
   m_TagString: Untagged
@@ -2149,18 +2148,36 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1885660367
+--- !u!1 &2070027690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2070027692}
+  - component: {fileID: 2070027691}
+  m_Layer: 0
+  m_Name: MenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2070027691
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1885660362}
+  m_GameObject: {fileID: 2070027690}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 265b5dbe9f75f11479ed2eb56f39a023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musicEvent: {fileID: 0}
   playBtn: {fileID: 2765804962169847644}
   optionsBtn: {fileID: 1048549407}
   creditsBtn: {fileID: 529012685}
@@ -2169,6 +2186,21 @@ MonoBehaviour:
   creditsPanel: {fileID: 177326509}
   closeOptionsBtn: {fileID: 1312654029}
   closeCreditsBtn: {fileID: 674143020}
+--- !u!4 &2070027692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070027690}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &623153130064070120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2381,6 +2413,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 955617937}
+  - {fileID: 2070027692}
   - {fileID: 1378353455}
   - {fileID: 1885660366}
   - {fileID: 1042358690}

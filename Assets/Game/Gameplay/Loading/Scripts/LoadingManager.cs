@@ -31,6 +31,7 @@ public class LoadingManager : MonoBehaviour
                         LoadingScene(nextScene,
                             onSuccess: () =>
                             {
+                                SetActiveScene(nextScene);
                                 loadingUI.ToggleUI(false, onComplete);
                             });
                     });
@@ -74,5 +75,13 @@ public class LoadingManager : MonoBehaviour
         }
 
         return default;
+    }
+
+    private void SetActiveScene(SceneGame scene)
+    {
+        if (sceneNames.TryGetValue(scene, out string sceneName))
+        {
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+        }
     }
 }

@@ -49,7 +49,7 @@ public class WaveController : MonoBehaviour
 
     private Vector3 GetRandomSpawn()
     {
-        if (enemySpawns.Length == 0) return Vector3.zero;
+        if (enemySpawns.Length == 0) return transform.position;
 
         int index = Random.Range(0, enemySpawns.Length);
         return enemySpawns[index].position;

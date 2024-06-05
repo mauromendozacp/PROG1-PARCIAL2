@@ -24,6 +24,7 @@ public class EnemyPoolController : MonoBehaviour
     {
         EnemyController enemy = enemyPool.Get();
         enemy.transform.position = spawnPosition;
+        enemy.ToggleAgent(true);
     }
 
     public void SetMainTarget(Transform enemyMainTarget)

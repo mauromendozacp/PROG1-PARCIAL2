@@ -35,6 +35,7 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
     {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
+        ToggleAgent(false);
     }
 
     protected void Update()
@@ -68,6 +69,11 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
         this.mainTarget = mainTarget;
     }
 
+    public void ToggleAgent(bool status)
+    {
+        agent.enabled = status;
+    }
+
     public virtual void SetWinState()
     {
         state = FSM_ENEMY.WIN;
@@ -96,5 +102,6 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
     public virtual void OnRelease()
     {
         gameObject.SetActive(false);
+        ToggleAgent(false);
     }
 }

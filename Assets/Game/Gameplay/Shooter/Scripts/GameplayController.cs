@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class GameplayController : MonoBehaviour
 {
-    [Header("Reference Settings"), Space]
+    [Header("Main Settings")]
+    [SerializeField] private AudioEvent musicEvent = null;
     [SerializeField] private PlayerController playerController = null;
     [SerializeField] private WaveController waveController = null;
     [SerializeField] private EnemyPoolController enemyPoolController = null;
@@ -13,6 +14,8 @@ public class GameplayController : MonoBehaviour
         playerController.Init(PlayerDefeat);
         runeController.Init(PlayerDefeat);
         waveController.Init(enemyPoolController, runeController.transform);
+
+        GameManager.Instance.AudioManager.PlayAudio(musicEvent);
     }
 
     private void PlayerDefeat()

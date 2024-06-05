@@ -15,9 +15,10 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 {
     [Header("General Settings"), Space]
     [SerializeField] private int lives = 0;
-    [SerializeField] private float speed = 0f;
     [SerializeField] private float mass = 1f;
+    [SerializeField] private float moveSpeed = 0f;
     [SerializeField] private float rotationSpeed = 0f;
+    [SerializeField] [Range(.5f, 3f)] private float attackSpeed = 0f;
     [SerializeField] private LayerMask attackLayer = default;
 
     [Header("Reference Settings"), Space]
@@ -29,6 +30,10 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     [Header("Arrow Settings"), Space]
     [SerializeField] private BorrowController arrowController = null;
     [SerializeField] private float arrowForce = 0f;
+
+    [Header("Sounds Settings")]
+    [SerializeField] private AudioEvent reloadArrowEvent = null;
+    [SerializeField] private AudioEvent fireArrowEvent = null;
 
     private PlayerInput inputAction = null;
 
@@ -51,7 +56,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
     private void Start()
     {
-        locomotionController.Init(FireArrow, onEnableInput: () => UpdateInputFSM(FSM_INPUT.ENABLE_ALL));
+        locomotionController.Init(attackSpeed, ReloadArrow, FireArrow, onEnableInput: () => UpdateInputFSM(FSM_INPUT.ENABLE_ALL));
 
         currentLives = lives;
         UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
@@ -130,7 +135,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
         movement.y = fallVelocity;
 
-        characterController.Move(movement * Time.deltaTime * speed);
+        characterController.Move(movement * Time.deltaTime * moveSpeed);
     }
 
     private void LookAtMouse()
@@ -155,8 +160,14 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
     }
 
+    private void ReloadArrow()
+    {
+        GameManager.Instance.AudioManager.PlayAudio(reloadArrowEvent);
+    }
+
     private void FireArrow()
     {
+        GameManager.Instance.AudioManager.PlayAudio(fireArrowEvent);
         arrowController.FireArrow(arrowForce, body.transform.forward);
     }
 

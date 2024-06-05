@@ -346,8 +346,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lives: 10
-  speed: 15
   mass: 1
+  moveSpeed: 15
+  attackSpeed: 1.5
   rotationSpeed: 720
   attackLayer:
     serializedVersion: 2
@@ -358,6 +359,8 @@ MonoBehaviour:
   mainCamera: {fileID: 5553771788934677829}
   arrowController: {fileID: 4874900873115443331}
   arrowForce: 25
+  reloadArrowEvent: {fileID: 11400000, guid: beccf12c9b484df4aa51b97cfffc9bba, type: 2}
+  fireArrowEvent: {fileID: 11400000, guid: adbed66d9d27a6545bba0b42d27e6c29, type: 2}
 --- !u!1 &4627393086828579717
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,11 +6,13 @@ public class PlayerLocomotionController : MonoBehaviour
 {
     private const string deadAnimName = "Death";
 
-    private const string speedKey = "Speed";
+    private const string moveSpeedKey = "MoveSpeed";
     private const string attackKey = "Attack";
     private const string recieveHitKey = "RecieveHit";
+    private const string attackSpeedKey = "AttackSpeed";
 
     private Animator animator = null;
+    private Action onReloadArrow = null;
     private Action onFireArrow = null;
     private Action onEnableInput = null;
 
@@ -19,15 +21,18 @@ public class PlayerLocomotionController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    public void Init(Action onFireArrow, Action onEnableInput)
+    public void Init(float attackSpeed, Action onReloadArrow, Action onFireArrow, Action onEnableInput)
     {
+        animator.SetFloat(attackSpeedKey, attackSpeed);
+
+        this.onReloadArrow = onReloadArrow;
         this.onFireArrow = onFireArrow;
         this.onEnableInput = onEnableInput;
     }
 
     public void UpdateIdleRunAnimation(float speed)
     {
-        animator.SetFloat(speedKey, speed);
+        animator.SetFloat(moveSpeedKey, speed);
     }
 
     public void PlayDeadAnimation()
@@ -44,6 +49,11 @@ public class PlayerLocomotionController : MonoBehaviour
     public void PlayAttackAnimation()
     {
         animator.SetTrigger(attackKey);
+    }
+
+    public void ReloadArrow()
+    {
+        onReloadArrow?.Invoke();
     }
 
     public void FireArrow()

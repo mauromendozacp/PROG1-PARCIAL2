@@ -1,31 +1,54 @@
+using System;
 using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.Pool;
 
+[Serializable]
+public class EnemyData
+{
+    public string id = string.Empty;
+    public EnemyController prefab = null;
+}
+
 public class EnemyPoolController : MonoBehaviour
 {
-    [SerializeField] private EnemyController enemyPrefab = null;
-    [SerializeField] private Transform enemyHolder = null;
+    [SerializeField] private EnemyData[] enemies = null;
 
-    private ObjectPool<EnemyController> enemyPool = null;
+    private Dictionary<string, ObjectPool<EnemyController>> enemyPoolDict = null;
     private List<EnemyController> enemyList = null;
     private Transform enemyMainTarget = null;
-    private Camera mainCamera = null;
 
     public List<EnemyController> EnemyList => enemyList;
 
     public void Init(Camera mainCamera)
     {
-        this.mainCamera = mainCamera;
-
-        enemyPool = new ObjectPool<EnemyController>(CreateEnemy, GetEnemy, ReleaseEnemy, DestroyEnemy);
+        enemyPoolDict = new Dictionary<string, ObjectPool<EnemyController>>();
         enemyList = new List<EnemyController>();
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            EnemyController enemyPrefab = enemies[i].prefab;
+            string enemyId = enemies[i].id;
+
+            GameObject enemyHolder = new GameObject(enemyId + "_holder");
+            enemyHolder.transform.SetParent(transform);
+
+            enemyPoolDict.Add(enemyId, new ObjectPool<EnemyController>(
+                createFunc: () =>
+                {
+                    EnemyController enemy = Instantiate(enemyPrefab, enemyHolder.transform);
+                    enemy.Init(mainCamera, (e) => enemyPoolDict[enemyId].Release(e));
+
+                    return enemy;
+                }, 
+                GetEnemy, ReleaseEnemy, DestroyEnemy));
+        }
     }
 
     public void SpawnEnemy(Vector3 spawnPosition)
     {
-        EnemyController enemy = enemyPool.Get();
+        EnemyController enemy = GetRandomEnemy();
         enemy.transform.position = spawnPosition;
         enemy.ToggleAgent(true);
     }
@@ -37,12 +60,12 @@ public class EnemyPoolController : MonoBehaviour
         enemyList.ForEach((enemy) => enemy.SetMainTarget(enemyMainTarget));
     }
 
-    private EnemyController CreateEnemy()
+    private EnemyController GetRandomEnemy()
     {
-        EnemyController enemy = Instantiate(enemyPrefab, enemyHolder);
-        enemy.Init(mainCamera, (e) => enemyPool.Release(e));
+        int randomIndex = UnityEngine.Random.Range(0, enemies.Length);
+        string enemyId = enemies[randomIndex].id;
 
-        return enemy;
+        return enemyPoolDict[enemyId].Get();
     }
 
     private void GetEnemy(EnemyController enemy)

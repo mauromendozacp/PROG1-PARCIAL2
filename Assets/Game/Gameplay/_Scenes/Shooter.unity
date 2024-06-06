@@ -9346,6 +9346,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyPoolController
       objectReference: {fileID: 0}
+    - target: {fileID: 2595097390220864420, guid: 5699fc3a7cabe87439102cdc0c3833f8, type: 3}
+      propertyPath: enemyPrefab
+      value: 
+      objectReference: {fileID: 4148152045500841630, guid: 4835309e24582ec4abe22b9be9d01a27, type: 3}
     - target: {fileID: 8807747396727614231, guid: 5699fc3a7cabe87439102cdc0c3833f8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

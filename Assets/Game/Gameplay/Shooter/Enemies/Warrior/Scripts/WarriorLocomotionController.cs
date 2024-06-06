@@ -2,7 +2,7 @@ using System;
 
 using UnityEngine;
 
-public class SkeletonLocomotionController : MonoBehaviour
+public class WarriorLocomotionController : MonoBehaviour
 {
     private const string idleRunAnimName = "Idle/Run";
     private const string deadAnimName = "Death";

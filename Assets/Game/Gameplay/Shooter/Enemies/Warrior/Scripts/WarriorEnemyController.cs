@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class SkeletonEnemyController : EnemyController, IRecieveDamage
+public class WarriorEnemyController : EnemyController, IRecieveDamage
 {
     [Header("Reference Settings"), Space]
-    [SerializeField] private SkeletonLocomotionController locomotionController = null;
+    [SerializeField] private WarriorLocomotionController locomotionController = null;
     [SerializeField] private Transform bodyCenterTransform = null;
 
     [Header("Sounds Settings")]
@@ -34,7 +34,7 @@ public class SkeletonEnemyController : EnemyController, IRecieveDamage
 
                 break;
             case FSM_ENEMY.GO_TO_TARGET:
-                if (CheckPlayerIsOnFront(out RaycastHit hit))
+                if (CheckTargetIsOnFront(out RaycastHit hit))
                 {
                     AttackTarget(hit);
                 }
@@ -65,7 +65,7 @@ public class SkeletonEnemyController : EnemyController, IRecieveDamage
         agent.isStopped = state != FSM_ENEMY.GO_TO_TARGET;
     }
 
-    private bool CheckPlayerIsOnFront(out RaycastHit hit)
+    private bool CheckTargetIsOnFront(out RaycastHit hit)
     {
         if (Physics.Raycast(bodyCenterTransform.position, bodyCenterTransform.forward, out RaycastHit hitInfo, distanceToAttack, attackLayer))
         {

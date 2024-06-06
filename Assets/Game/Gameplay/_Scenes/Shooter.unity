@@ -3417,6 +3417,11 @@ Transform:
   - {fileID: 650616889}
   m_Father: {fileID: 1742522290}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &609968027 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5553771788934677829, guid: df2454ed0b0d6be448cd6b5a5138cfd9, type: 3}
+  m_PrefabInstance: {fileID: 708882679}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &639999614
 GameObject:
   m_ObjectHideFlags: 0
@@ -6080,6 +6085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicEvent: {fileID: 0}
+  mainCamera: {fileID: 609968027}
   playerController: {fileID: 708882680}
   waveController: {fileID: 2097766449}
   enemyPoolController: {fileID: 2004809858}

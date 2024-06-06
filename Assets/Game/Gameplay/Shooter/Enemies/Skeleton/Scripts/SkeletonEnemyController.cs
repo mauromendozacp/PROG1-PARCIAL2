@@ -114,7 +114,7 @@ public class SkeletonEnemyController : EnemyController, IRecieveDamage
     {
         if (state == FSM_ENEMY.DEATH) return;
 
-        currentLives = Mathf.Clamp(currentLives - damage, 0, lives);
+        UpdateLife(Mathf.Clamp(currentLives - damage, 0, lives));
 
         if (currentLives <= 0)
         {
@@ -133,6 +133,7 @@ public class SkeletonEnemyController : EnemyController, IRecieveDamage
 
     public override void OnGet()
     {
+        UpdateLife(lives);
         ToggleCollider(true);
         locomotionController.PlayIdleRunAnimation();
 

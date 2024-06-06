@@ -276,8 +276,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 3.1074905, y: 0.00022363663}
-  m_SizeDelta: {x: 6.215, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4654998814158140909
 CanvasRenderer:
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.990566, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -311,7 +311,7 @@ MonoBehaviour:
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -560,6 +560,7 @@ MonoBehaviour:
     m_Bits: 320
   locomotionController: {fileID: 7811050923439172246}
   bodyCenterTransform: {fileID: 3522290904661424579}
+  healthBarSlider: {fileID: 7954331623474590031}
   attackEvent: {fileID: 11400000, guid: 5d63d9adf66411b44909e62176e65bc8, type: 2}
   hurtEvent: {fileID: 11400000, guid: 7bc15e5252023ec49b41f9107aa70b74, type: 2}
 --- !u!195 &2543676812988738540
@@ -1209,8 +1210,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.8, y: 114.61}
-  m_SizeDelta: {x: 202.81, y: 25.21}
+  m_AnchoredPosition: {x: 0, y: 115}
+  m_SizeDelta: {x: 200, y: 15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7954331623474590031
 MonoBehaviour:
@@ -1553,10 +1554,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8567273559732961673}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 1.699997, y: 0.00035333633}
-  m_SizeDelta: {x: -14.985, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9062303824128905135
 CanvasRenderer:
@@ -1640,9 +1641,8 @@ GameObject:
   - component: {fileID: 7853908809706212167}
   - component: {fileID: 8944961703699915930}
   - component: {fileID: 8639571019682988569}
-  - component: {fileID: 8722374451939467095}
   m_Layer: 5
-  m_Name: Enemy Canvas
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1731,19 +1731,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8722374451939467095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8158719692066742554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ff6ae03fef05f64c820b174dfed7cdc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCamera: {fileID: 0}
 --- !u!1 &8693673414669572774
 GameObject:
   m_ObjectHideFlags: 0
@@ -1871,10 +1858,10 @@ RectTransform:
   - {fileID: 5020033219732730678}
   m_Father: {fileID: 8567273559732961673}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.06417315, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -7.977257, y: 0}
-  m_SizeDelta: {x: -7.045516, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8955274209659550134
 GameObject:

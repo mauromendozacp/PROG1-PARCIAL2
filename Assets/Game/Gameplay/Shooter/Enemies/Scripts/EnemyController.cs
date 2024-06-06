@@ -2,6 +2,7 @@ using System;
 
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public enum FSM_ENEMY
 {
@@ -16,12 +17,16 @@ public enum FSM_ENEMY
 public abstract class EnemyController : MonoBehaviour, IRecieveDamage
 {
     [Header("General Settings"), Space]
-    [SerializeField] protected int lives = 0;
     [SerializeField] protected int damage = 0;
     [SerializeField] protected float speed = 0f;
     [SerializeField] protected float distanceToAttack = 0f;
     [SerializeField] protected LayerMask attackLayer = default;
 
+    [Header("Life Settings"), Space]
+    [SerializeField] protected int lives = 0;
+    [SerializeField] protected Slider healthBarSlider = null;
+
+    protected Camera mainCamera = null;
     protected NavMeshAgent agent = null;
     protected Transform mainTarget = null;
     protected Transform secondaryTarget = null;
@@ -41,6 +46,7 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
     protected void Update()
     {
         UpdateFSM();
+        LookBarToCamera();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,8 +65,9 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
         }
     }
 
-    public void Init(Action<EnemyController> onRelease)
+    public void Init(Camera mainCamera, Action<EnemyController> onRelease)
     {
+        this.mainCamera = mainCamera;
         this.onRelease = onRelease;
     }
 
@@ -85,6 +92,17 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
     protected Transform GetFocusTarget()
     {
         return secondaryTarget != null ? secondaryTarget : mainTarget;
+    }
+
+    protected void UpdateLife(int lives)
+    {
+        currentLives = lives;
+        healthBarSlider.value = (float)currentLives / this.lives;
+    }
+
+    private void LookBarToCamera()
+    {
+        healthBarSlider.transform.LookAt(mainCamera.transform, Vector3.up);
     }
 
     public abstract void RecieveDamage(int damage);

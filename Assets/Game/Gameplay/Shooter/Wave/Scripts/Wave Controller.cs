@@ -17,11 +17,9 @@ public class WaveController : MonoBehaviour
         UpdateTimer();
     }
 
-    public void Init(EnemyPoolController enemyPoolController, Transform enemyMainTarget)
+    public void Init(EnemyPoolController enemyPoolController)
     {
         this.enemyPoolController = enemyPoolController;
-        this.enemyPoolController.Init();
-        this.enemyPoolController.SetMainTarget(enemyMainTarget);
 
         StartWave();
     }

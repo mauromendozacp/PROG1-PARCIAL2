@@ -11,11 +11,14 @@ public class EnemyPoolController : MonoBehaviour
     private ObjectPool<EnemyController> enemyPool = null;
     private List<EnemyController> enemyList = null;
     private Transform enemyMainTarget = null;
+    private Camera mainCamera = null;
 
     public List<EnemyController> EnemyList => enemyList;
 
-    public void Init()
+    public void Init(Camera mainCamera)
     {
+        this.mainCamera = mainCamera;
+
         enemyPool = new ObjectPool<EnemyController>(CreateEnemy, GetEnemy, ReleaseEnemy, DestroyEnemy);
         enemyList = new List<EnemyController>();
     }
@@ -37,7 +40,7 @@ public class EnemyPoolController : MonoBehaviour
     private EnemyController CreateEnemy()
     {
         EnemyController enemy = Instantiate(enemyPrefab, enemyHolder);
-        enemy.Init((e) => enemyPool.Release(e));
+        enemy.Init(mainCamera, (e) => enemyPool.Release(e));
 
         return enemy;
     }

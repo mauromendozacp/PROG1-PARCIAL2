@@ -19,7 +19,8 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     [SerializeField] private float moveSpeed = 0f;
     [SerializeField] private float rotationSpeed = 0f;
     [SerializeField] [Range(.5f, 3f)] private float attackSpeed = 0f;
-    [SerializeField] private LayerMask attackLayer = default;
+    [SerializeField] private LayerMask rangeAttackLayer = default;
+    [SerializeField] private LayerMask attackObjectsLayer = default;
 
     [Header("Reference Settings"), Space]
     [SerializeField] private Transform body = null;
@@ -143,9 +144,12 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     private void LookAtMouse()
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, attackLayer, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, rangeAttackLayer, QueryTriggerInteraction.Ignore))
         {
-            Vector3 direction = hit.point - body.position;
+            GameObject hitGO = hit.collider.gameObject;
+            Vector3 hitPos = Utils.CheckLayerInMask(attackObjectsLayer, hitGO.layer) ? hitGO.transform.position : hit.point;
+
+            Vector3 direction = hitPos - body.position;
             direction.y = 0f;
             currentDir = direction;
         }

@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     [Header("Sounds Settings")]
     [SerializeField] private AudioEvent reloadArrowEvent = null;
     [SerializeField] private AudioEvent fireArrowEvent = null;
+    [SerializeField] private AudioEvent hurtEvent = null;
+    [SerializeField] private AudioEvent deathEvent = null;
 
     private PlayerInput inputAction = null;
 
@@ -194,11 +196,15 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
             characterController.enabled = false;
             locomotionController.PlayDeadAnimation();
             onDeath?.Invoke();
+
+            GameManager.Instance.AudioManager.PlayAudio(deathEvent);
         }
         else
         {
             locomotionController.PlayRecieveHitAnimation();
             UpdateInputFSM(FSM_INPUT.MOVEMENT);
+
+            GameManager.Instance.AudioManager.PlayAudio(hurtEvent);
         }
     }
 }

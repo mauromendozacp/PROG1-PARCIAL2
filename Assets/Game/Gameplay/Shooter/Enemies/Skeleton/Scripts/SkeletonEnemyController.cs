@@ -6,6 +6,10 @@ public class SkeletonEnemyController : EnemyController, IRecieveDamage
     [SerializeField] private SkeletonLocomotionController locomotionController = null;
     [SerializeField] private Transform bodyCenterTransform = null;
 
+    [Header("Sounds Settings")]
+    [SerializeField] private AudioEvent attackEvent = null;
+    [SerializeField] private AudioEvent hurtEvent = null;
+
     private CapsuleCollider capsuleCollider = null;
 
     protected override void Awake()
@@ -91,6 +95,8 @@ public class SkeletonEnemyController : EnemyController, IRecieveDamage
 
             locomotionController.PlayAttackAnimation();
             state = FSM_ENEMY.ATTACK;
+
+            GameManager.Instance.AudioManager.PlayAudio(attackEvent);
         }
         else
         {
@@ -115,6 +121,8 @@ public class SkeletonEnemyController : EnemyController, IRecieveDamage
             locomotionController.PlayDeadAnimation();
             ToggleCollider(false);
             state = FSM_ENEMY.DEATH;
+
+            GameManager.Instance.AudioManager.PlayAudio(hurtEvent);
         }
         else
         {

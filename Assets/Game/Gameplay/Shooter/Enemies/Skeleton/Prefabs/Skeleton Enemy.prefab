@@ -484,6 +484,8 @@ MonoBehaviour:
     m_Bits: 320
   locomotionController: {fileID: 7811050923439172246}
   bodyCenterTransform: {fileID: 3522290904661424579}
+  attackEvent: {fileID: 11400000, guid: 5d63d9adf66411b44909e62176e65bc8, type: 2}
+  hurtEvent: {fileID: 11400000, guid: 7bc15e5252023ec49b41f9107aa70b74, type: 2}
 --- !u!195 &2543676812988738540
 NavMeshAgent:
   m_ObjectHideFlags: 0

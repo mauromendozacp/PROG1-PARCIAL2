@@ -46,8 +46,10 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     private Vector3 currentDir = Vector3.zero;
 
     private int currentLives = 0;
+    private bool defeat = false;
 
     private Action onDeath = null;
+    private Action<int, int> onUpdateLives = null;
 
     private const string moveInputKey = "move";
     private const string fireInputKey = "fire";
@@ -61,13 +63,12 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     {
         locomotionController.Init(attackSpeed, ReloadArrow, FireArrow, onEnableInput: () => UpdateInputFSM(FSM_INPUT.ENABLE_ALL));
 
-        currentLives = lives;
         UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
     }
 
     private void Update()
     {
-        if (CheckIsDead()) return;
+        if (CheckIsDead() || defeat) return;
 
         ApplyGravity();
         Movement();
@@ -77,9 +78,12 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         locomotionController.UpdateIdleRunAnimation(move.magnitude);
     }
 
-    public void Init(Action onDeath)
+    public void Init(Action<int, int> onUpdateLives, Action onDeath)
     {
+        this.onUpdateLives = onUpdateLives;
         this.onDeath = onDeath;
+
+        UpdateLives(lives);
     }
 
     public void UpdateInputFSM(FSM_INPUT fsm)
@@ -103,6 +107,11 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
                 inputAction.actions[fireInputKey].Disable();
                 break;
         }
+    }
+
+    public void PlayerDefeat()
+    {
+        defeat = true;
     }
 
     public void OnMove(InputValue value)
@@ -191,9 +200,15 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         return currentLives <= 0;
     }
 
+    private void UpdateLives(int lives)
+    {
+        currentLives = lives;
+        onUpdateLives?.Invoke(currentLives, this.lives);
+    }
+
     public void RecieveDamage(int damage)
     {
-        currentLives = Mathf.Clamp(currentLives - damage, 0, lives);
+        UpdateLives(Mathf.Clamp(currentLives - damage, 0, lives));
 
         if (CheckIsDead())
         {

@@ -5,6 +5,9 @@ public class GameplayController : MonoBehaviour
     [Header("Main Settings")]
     [SerializeField] private AudioEvent musicEvent = null;
     [SerializeField] private Camera mainCamera = null;
+    [SerializeField] private GameplayUI gameplayUI = null;
+
+    [Header("Controllers Settings")]
     [SerializeField] private PlayerController playerController = null;
     [SerializeField] private WaveController waveController = null;
     [SerializeField] private EnemyPoolController enemyPoolController = null;
@@ -12,9 +15,9 @@ public class GameplayController : MonoBehaviour
 
     public void Start()
     {
-        playerController.Init(PlayerDefeat);
-        runeController.Init(PlayerDefeat);
-        waveController.Init(enemyPoolController);
+        playerController.Init(gameplayUI.UpdatePlayerHealth, PlayerDefeat);
+        runeController.Init(gameplayUI.UpdateRuneHealth, PlayerDefeat);
+        waveController.Init(enemyPoolController, gameplayUI.UpdateWave);
         enemyPoolController.Init(mainCamera);
         enemyPoolController.SetMainTarget(runeController.transform);
 
@@ -23,6 +26,7 @@ public class GameplayController : MonoBehaviour
 
     private void PlayerDefeat()
     {
+        playerController.PlayerDefeat();
         playerController.UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
         waveController.StopWave();
         enemyPoolController.EnemyList.ForEach(e => e.SetWinState());

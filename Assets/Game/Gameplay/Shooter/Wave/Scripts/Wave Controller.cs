@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 
 using UnityEngine;
@@ -10,17 +11,22 @@ public class WaveController : MonoBehaviour
 
     private EnemyPoolController enemyPoolController = null;
 
+    private int currentWave = 1;
     private float timer = 0f;
+
+    private Action<int, int> onUpdateWave = null;
 
     private void Update()
     {
         UpdateTimer();
     }
 
-    public void Init(EnemyPoolController enemyPoolController)
+    public void Init(EnemyPoolController enemyPoolController, Action<int, int> onUpdateWave)
     {
         this.enemyPoolController = enemyPoolController;
+        this.onUpdateWave = onUpdateWave;
 
+        UpdateWave(currentWave);
         StartWave();
     }
 
@@ -49,12 +55,18 @@ public class WaveController : MonoBehaviour
     {
         if (enemySpawns.Length == 0) return transform.position;
 
-        int index = Random.Range(0, enemySpawns.Length);
+        int index = UnityEngine.Random.Range(0, enemySpawns.Length);
         return enemySpawns[index].position;
     }
 
     private void UpdateTimer()
     {
         timer += Time.deltaTime;
+    }
+
+    private void UpdateWave(int wave)
+    {
+        currentWave = wave;
+        onUpdateWave?.Invoke(currentWave, 3);
     }
 }

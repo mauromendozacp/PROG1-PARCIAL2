@@ -43,12 +43,18 @@ public class PlayerInputController : MonoBehaviour
 
     public void OnFire(InputValue value)
     {
-        onFire?.Invoke();
+        if (value.isPressed)
+        {
+            onFire?.Invoke();
+        }
     }
 
     public void OnPause(InputValue value)
     {
-        onPause?.Invoke();
+        if (value.isPressed)
+        {
+            onPause?.Invoke();
+        }
     }
 
     public void UpdateInputFSM(FSM_INPUT fsm)

@@ -57,10 +57,11 @@ MonoBehaviour:
     m_Bits: 320
   lives: 3
   healthBarSlider: {fileID: 1571061190328920602}
-  locomotionController: {fileID: 0}
-  bodyCenterTransform: {fileID: 0}
   attackEvent: {fileID: 11400000, guid: 5d63d9adf66411b44909e62176e65bc8, type: 2}
   hurtEvent: {fileID: 11400000, guid: 7bc15e5252023ec49b41f9107aa70b74, type: 2}
+  deathEvent: {fileID: 0}
+  locomotionController: {fileID: 0}
+  bodyCenterTransform: {fileID: 0}
 --- !u!195 &8581748390845480786
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -75,7 +76,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 1020
-  m_StoppingDistance: 1
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

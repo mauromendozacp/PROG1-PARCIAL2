@@ -21,10 +21,10 @@ public class RuneController : MonoBehaviour, IRecieveDamage
 
     public void RecieveDamage(int damage)
     {
-        if (health <= 0) return;
+        if (currentHealth <= 0) return;
 
-        UpdateHealth(Mathf.Clamp(health - damage, 0, health));
-        if (health == 0)
+        UpdateHealth(Mathf.Clamp(currentHealth - damage, 0, health));
+        if (currentHealth == 0)
         {
             onDestroy?.Invoke();
         }

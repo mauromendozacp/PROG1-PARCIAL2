@@ -6,10 +6,6 @@ public class WarriorEnemyController : EnemyController, IRecieveDamage
     [SerializeField] private WarriorLocomotionController locomotionController = null;
     [SerializeField] private Transform bodyCenterTransform = null;
 
-    [Header("Sounds Settings")]
-    [SerializeField] private AudioEvent attackEvent = null;
-    [SerializeField] private AudioEvent hurtEvent = null;
-
     private CapsuleCollider capsuleCollider = null;
 
     protected override void Awake()
@@ -54,7 +50,7 @@ public class WarriorEnemyController : EnemyController, IRecieveDamage
                 break;
             case FSM_ENEMY.ATTACK:
                 break;
-            case FSM_ENEMY.RECIEVE_DAMAGE:
+            case FSM_ENEMY.HURT:
                 break;
             case FSM_ENEMY.DEATH:
                 break;
@@ -93,21 +89,41 @@ public class WarriorEnemyController : EnemyController, IRecieveDamage
         {
             recieveDamage.RecieveDamage(damage);
 
-            locomotionController.PlayAttackAnimation();
-            state = FSM_ENEMY.ATTACK;
-
-            GameManager.Instance.AudioManager.PlayAudio(attackEvent);
+            Attack();
         }
         else
         {
-            Debug.LogError("Can't attack this object: " + hit.collider.gameObject.name);
+            Debug.LogWarning("Can't attack this object: " + hit.collider.gameObject.name);
         }
     }
 
     public override void SetWinState()
     {
         base.SetWinState();
+
         locomotionController.PlayIdleRunAnimation();
+    }
+
+    protected override void Attack()
+    {
+        base.Attack();
+
+        locomotionController.PlayAttackAnimation();
+    }
+
+    protected override void Hurt()
+    {
+        base.Hurt();
+
+        locomotionController.PlayRecieveHitAnimation();
+    }
+
+    protected override void Death()
+    {
+        base.Death();
+
+        locomotionController.PlayDeadAnimation();
+        ToggleCollider(false);
     }
 
     public override void RecieveDamage(int damage)
@@ -118,16 +134,11 @@ public class WarriorEnemyController : EnemyController, IRecieveDamage
 
         if (currentLives <= 0)
         {
-            locomotionController.PlayDeadAnimation();
-            ToggleCollider(false);
-            state = FSM_ENEMY.DEATH;
-
-            GameManager.Instance.AudioManager.PlayAudio(hurtEvent);
+            Death();
         }
         else
         {
-            locomotionController.PlayRecieveHitAnimation();
-            state = FSM_ENEMY.RECIEVE_DAMAGE;
+            Hurt();
         }
     }
 

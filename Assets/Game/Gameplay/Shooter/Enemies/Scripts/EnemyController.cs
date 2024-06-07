@@ -9,7 +9,7 @@ public enum FSM_ENEMY
     IDLE,
     GO_TO_TARGET,
     ATTACK,
-    RECIEVE_DAMAGE,
+    HURT,
     DEATH,
     WIN
 }
@@ -26,6 +26,11 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
     [SerializeField] protected int lives = 0;
     [SerializeField] protected Slider healthBarSlider = null;
 
+    [Header("Sounds Settings")]
+    [SerializeField] protected AudioEvent attackEvent = null;
+    [SerializeField] protected AudioEvent hurtEvent = null;
+    [SerializeField] protected AudioEvent deathEvent = null;
+
     protected Camera mainCamera = null;
     protected NavMeshAgent agent = null;
     protected Transform mainTarget = null;
@@ -34,6 +39,7 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
     protected FSM_ENEMY state = default;
     protected int currentLives = 0;
 
+    protected Action onKill = null;
     protected Action<EnemyController> onRelease = null;
 
     protected virtual void Awake()
@@ -65,9 +71,10 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
         }
     }
 
-    public void Init(Camera mainCamera, Action<EnemyController> onRelease)
+    public void Init(Camera mainCamera, Action onKill, Action<EnemyController> onRelease)
     {
         this.mainCamera = mainCamera;
+        this.onKill = onKill;
         this.onRelease = onRelease;
     }
 
@@ -87,6 +94,28 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
 
         mainTarget = null;
         secondaryTarget = null;
+    }
+
+    protected virtual void Attack()
+    {
+        state = FSM_ENEMY.ATTACK;
+
+        GameManager.Instance.AudioManager.PlayAudio(attackEvent);
+    }
+
+    protected virtual void Hurt()
+    {
+        state = FSM_ENEMY.HURT;
+
+        GameManager.Instance.AudioManager.PlayAudio(hurtEvent);
+    }
+
+    protected virtual void Death()
+    {
+        onKill?.Invoke();
+        state = FSM_ENEMY.DEATH;
+
+        GameManager.Instance.AudioManager.PlayAudio(deathEvent);
     }
 
     protected Transform GetFocusTarget()

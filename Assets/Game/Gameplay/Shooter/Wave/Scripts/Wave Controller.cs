@@ -5,21 +5,15 @@ using UnityEngine;
 
 public class WaveController : MonoBehaviour
 {
-    [SerializeField] private float spawnDelay = 0f;
-    [SerializeField] private float waveTime = 0f;
+    [SerializeField] private WaveData[] waves = null;
     [SerializeField] private Transform[] enemySpawns = null;
 
     private EnemyPoolController enemyPoolController = null;
 
-    private int currentWave = 1;
-    private float timer = 0f;
+    private int currentWave = 0;
+    private int waveEnemies = 0;
 
     private Action<int, int> onUpdateWave = null;
-
-    private void Update()
-    {
-        UpdateTimer();
-    }
 
     public void Init(EnemyPoolController enemyPoolController, Action<int, int> onUpdateWave)
     {
@@ -27,21 +21,25 @@ public class WaveController : MonoBehaviour
         this.onUpdateWave = onUpdateWave;
 
         UpdateWave(currentWave);
-        StartWave();
     }
 
     public void StartWave()
     {
-        timer = 0f;
+        WaveData wave = waves[currentWave];
+        waveEnemies = wave.EnemyCount;
+        enemyPoolController.SetAvailableEnemies(wave.AvailableEnemies);
 
         StartCoroutine(SpawnEnemiesCoroutine());
         IEnumerator SpawnEnemiesCoroutine()
         {
-            while (timer < waveTime)
+            int spawnCount = 0;
+            while (spawnCount < wave.EnemyCount)
             {
-                yield return new WaitForSeconds(spawnDelay);
+                yield return new WaitForSeconds(wave.SpawnDelay);
 
                 enemyPoolController.SpawnEnemy(GetRandomSpawn());
+
+                spawnCount++;
             }
         }
     }
@@ -49,6 +47,19 @@ public class WaveController : MonoBehaviour
     public void StopWave()
     {
         StopAllCoroutines();
+    }
+
+    public void OnKillEnemy()
+    {
+        waveEnemies--;
+        if (waveEnemies <= 0)
+        {
+            if (currentWave < waves.Length - 1)
+            {
+                UpdateWave(currentWave + 1);
+                StartWave();
+            }
+        }
     }
 
     private Vector3 GetRandomSpawn()
@@ -59,14 +70,9 @@ public class WaveController : MonoBehaviour
         return enemySpawns[index].position;
     }
 
-    private void UpdateTimer()
-    {
-        timer += Time.deltaTime;
-    }
-
     private void UpdateWave(int wave)
     {
         currentWave = wave;
-        onUpdateWave?.Invoke(currentWave, 3);
+        onUpdateWave?.Invoke(currentWave + 1, waves.Length);
     }
 }

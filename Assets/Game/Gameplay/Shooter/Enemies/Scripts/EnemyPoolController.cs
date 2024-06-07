@@ -1,44 +1,40 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using UnityEngine;
 using UnityEngine.Pool;
-
-[Serializable]
-public class EnemyData
-{
-    public string id = string.Empty;
-    public EnemyController prefab = null;
-}
 
 public class EnemyPoolController : MonoBehaviour
 {
     [SerializeField] private EnemyData[] enemies = null;
 
-    private Dictionary<string, ObjectPool<EnemyController>> enemyPoolDict = null;
+    private Dictionary<ENEMY_TYPE, ObjectPool<EnemyController>> enemyPoolDict = null;
     private List<EnemyController> enemyList = null;
     private Transform enemyMainTarget = null;
 
+    private ENEMY_TYPE[] availableEnemies = null;
+
     public List<EnemyController> EnemyList => enemyList;
 
-    public void Init(Camera mainCamera)
+    public void Init(Camera mainCamera, Action onKillEnemy)
     {
-        enemyPoolDict = new Dictionary<string, ObjectPool<EnemyController>>();
+        enemyPoolDict = new Dictionary<ENEMY_TYPE, ObjectPool<EnemyController>>();
         enemyList = new List<EnemyController>();
 
         for (int i = 0; i < enemies.Length; i++)
         {
             EnemyController enemyPrefab = enemies[i].prefab;
-            string enemyId = enemies[i].id;
+            ENEMY_TYPE enemyId = enemies[i].id;
 
-            GameObject enemyHolder = new GameObject(enemyId + "_holder");
+            GameObject enemyHolder = new GameObject(enemyId.ToString().ToLower() + "_holder");
             enemyHolder.transform.SetParent(transform);
 
             enemyPoolDict.Add(enemyId, new ObjectPool<EnemyController>(
                 createFunc: () =>
                 {
                     EnemyController enemy = Instantiate(enemyPrefab, enemyHolder.transform);
-                    enemy.Init(mainCamera, (e) => enemyPoolDict[enemyId].Release(e));
+                    enemy.Init(mainCamera, onKillEnemy, (e) => enemyPoolDict[enemyId].Release(e));
 
                     return enemy;
                 }, 
@@ -60,10 +56,18 @@ public class EnemyPoolController : MonoBehaviour
         enemyList.ForEach((enemy) => enemy.SetMainTarget(enemyMainTarget));
     }
 
+    public void SetAvailableEnemies(ENEMY_TYPE[] availableEnemies)
+    {
+        this.availableEnemies = availableEnemies;
+    }
+
     private EnemyController GetRandomEnemy()
     {
-        int randomIndex = UnityEngine.Random.Range(0, enemies.Length);
-        string enemyId = enemies[randomIndex].id;
+        if (availableEnemies == null || availableEnemies.Length == 0) return null;
+
+        List<EnemyData> enemyList = enemies.Where(e => availableEnemies.Contains(e.id)).ToList();
+        int randomIndex = UnityEngine.Random.Range(0, enemyList.Count);
+        ENEMY_TYPE enemyId = enemyList[randomIndex].id;
 
         return enemyPoolDict[enemyId].Get();
     }

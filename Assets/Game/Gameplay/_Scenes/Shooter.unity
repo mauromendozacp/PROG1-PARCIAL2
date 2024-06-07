@@ -10311,11 +10311,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2595097390220864420, guid: 5699fc3a7cabe87439102cdc0c3833f8, type: 3}
       propertyPath: enemies.Array.data[0].id
-      value: skeleton
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2595097390220864420, guid: 5699fc3a7cabe87439102cdc0c3833f8, type: 3}
       propertyPath: enemies.Array.data[1].id
-      value: guaurrior
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2595097390220864420, guid: 5699fc3a7cabe87439102cdc0c3833f8, type: 3}
       propertyPath: enemies.Array.data[0].prefab
@@ -10878,6 +10878,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1620491612905006948, guid: 8289b521a6d46da428d5567f760e8db3, type: 3}
+      propertyPath: waves.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1620491612905006948, guid: 8289b521a6d46da428d5567f760e8db3, type: 3}
+      propertyPath: waves.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1b100939570fad940a76330177c58a1e, type: 2}
+    - target: {fileID: 1620491612905006948, guid: 8289b521a6d46da428d5567f760e8db3, type: 3}
+      propertyPath: waves.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0856b17d16c4716449bc7f1b56b61b4f, type: 2}
     - target: {fileID: 1620491612905006948, guid: 8289b521a6d46da428d5567f760e8db3, type: 3}
       propertyPath: enemySpawns.Array.size
       value: 5

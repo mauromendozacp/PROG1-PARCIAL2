@@ -18,10 +18,12 @@ public class GameplayController : MonoBehaviour
         playerController.Init(gameplayUI.UpdatePlayerHealth, PlayerDefeat);
         runeController.Init(gameplayUI.UpdateRuneHealth, PlayerDefeat);
         waveController.Init(enemyPoolController, gameplayUI.UpdateWave);
-        enemyPoolController.Init(mainCamera);
+        enemyPoolController.Init(mainCamera, waveController.OnKillEnemy);
         enemyPoolController.SetMainTarget(runeController.transform);
 
         GameManager.Instance.AudioManager.PlayAudio(musicEvent);
+
+        waveController.StartWave();
     }
 
     private void PlayerDefeat()

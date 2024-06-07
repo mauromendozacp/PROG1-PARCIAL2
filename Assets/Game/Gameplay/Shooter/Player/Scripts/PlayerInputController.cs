@@ -8,53 +8,40 @@ public enum FSM_INPUT
     ENABLE_ALL,
     MOVEMENT,
     ATTACK,
+    ONLY_UI,
     DISABLE_ALL
 }
 
 public class PlayerInputController : MonoBehaviour
 {
-    private PlayerInput inputAction = null;
-
-    private Vector2 move = Vector2.zero;
+    private PlayerInputActions inputAction = null;
 
     private Action onFire = null;
     private Action onPause = null;
 
-    private const string moveInputKey = "move";
-    private const string fireInputKey = "fire";
-
-    public Vector2 Move { get => move; }
-
-    private void Awake()
-    {
-        inputAction = GetComponent<PlayerInput>();
-    }
+    public Vector2 Move { get => GetMoveValue(); }
 
     public void Init(Action onFire, Action onPause)
     {
         this.onFire = onFire;
         this.onPause = onPause;
+
+        inputAction = new PlayerInputActions();
+
+        inputAction.Player.Fire.performed += OnFire;
+        inputAction.UI.Pause.performed += OnPause;
+
+        UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
     }
 
-    public void OnMove(InputValue value)
+    public void OnFire(InputAction.CallbackContext context)
     {
-        move = value.Get<Vector2>();
+        onFire?.Invoke();
     }
 
-    public void OnFire(InputValue value)
+    public void OnPause(InputAction.CallbackContext context)
     {
-        if (value.isPressed)
-        {
-            onFire?.Invoke();
-        }
-    }
-
-    public void OnPause(InputValue value)
-    {
-        if (value.isPressed)
-        {
-            onPause?.Invoke();
-        }
+        onPause?.Invoke();
     }
 
     public void UpdateInputFSM(FSM_INPUT fsm)
@@ -62,21 +49,32 @@ public class PlayerInputController : MonoBehaviour
         switch (fsm)
         {
             case FSM_INPUT.ENABLE_ALL:
-                inputAction.actions[moveInputKey].Enable();
-                inputAction.actions[fireInputKey].Enable();
+                inputAction.Player.Enable();
+                inputAction.UI.Enable();
                 break;
             case FSM_INPUT.MOVEMENT:
-                inputAction.actions[moveInputKey].Enable();
-                inputAction.actions[fireInputKey].Disable();
+                inputAction.Player.Fire.Disable();
+                inputAction.Player.Move.Enable();
                 break;
             case FSM_INPUT.ATTACK:
-                inputAction.actions[moveInputKey].Disable();
-                inputAction.actions[fireInputKey].Enable();
+                inputAction.Player.Fire.Enable();
+                inputAction.Player.Move.Disable();
+                break;
+            case FSM_INPUT.ONLY_UI:
+                inputAction.Player.Disable();
+                inputAction.UI.Enable();
                 break;
             case FSM_INPUT.DISABLE_ALL:
-                inputAction.actions[moveInputKey].Disable();
-                inputAction.actions[fireInputKey].Disable();
+                inputAction.Player.Disable();
+                inputAction.UI.Disable();
                 break;
         }
+    }
+
+    private Vector2 GetMoveValue()
+    {
+        if (inputAction == null) return Vector2.zero;
+
+        return inputAction.Player.Move.ReadValue<Vector2>();
     }
 }

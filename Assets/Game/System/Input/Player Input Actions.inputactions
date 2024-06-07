@@ -1,5 +1,5 @@
 {
-    "name": "Input Actions",
+    "name": "Player Input Actions",
     "maps": [
         {
             "name": "Player",
@@ -18,15 +18,6 @@
                     "name": "Fire",
                     "type": "Button",
                     "id": "a8bf1132-5228-485b-ab05-6de57f0a01f0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "162c0a6f-348b-4fac-b6a8-0cf4add1f859",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -51,7 +42,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -62,7 +53,7 @@
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -73,7 +64,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -84,7 +75,7 @@
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -95,7 +86,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -106,7 +97,7 @@
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -117,7 +108,7 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -128,7 +119,7 @@
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -139,29 +130,141 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "1d90bd90-0322-4c12-b250-3715b106a052",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "7f383230-8a56-4873-b7cd-770ab24e4403",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Point",
+                    "type": "PassThrough",
+                    "id": "4f978995-2d84-4560-8717-f1707917991e",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Click",
+                    "type": "PassThrough",
+                    "id": "463eb690-87aa-4211-8985-115d40e4959c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2dec36f8-b089-4fc4-abee-14b59cecd7e4",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "824d684a-11cb-46e4-9e19-4202e00e1789",
+                    "id": "3b9e40c8-450e-4a65-b41a-0b85f6bb8626",
+                    "path": "<Pen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9a72c5a9-d898-4338-a4d8-cd3ee4083c9f",
+                    "path": "<Touchscreen>/touch*/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touch",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5390efc6-0002-4f1f-ab4d-e0b38f77b24c",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "43db0e01-1b48-4c89-9a2c-998680c2aa57",
+                    "path": "<Pen>/tip",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e0d61cc6-a015-41f2-8b06-725b5a462065",
+                    "path": "<Touchscreen>/touch*/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touch",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "09c83186-d817-4d53-8dd2-58a6e3af4cf1",
+                    "path": "<XRController>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e2f43ae8-52d3-4e09-af36-2b3064fd1978",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "e151cebf-cc54-415d-b5fb-e72c00130190",
+                    "id": "e44fd10f-e369-4923-a66e-dcee09b8ece8",
                     "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false

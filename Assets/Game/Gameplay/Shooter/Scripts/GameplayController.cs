@@ -20,6 +20,7 @@ public class GameplayController : MonoBehaviour
         waveController.Init(enemyPoolController, gameplayUI.UpdateWave);
         enemyPoolController.Init(mainCamera, waveController.OnKillEnemy);
         enemyPoolController.SetMainTarget(runeController.transform);
+        gameplayUI.Init(playerController.EnableInput);
 
         GameManager.Instance.AudioManager.PlayAudio(musicEvent);
 

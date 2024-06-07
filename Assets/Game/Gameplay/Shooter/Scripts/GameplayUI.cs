@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,12 +17,19 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private Button resumeBtn = null;
     [SerializeField] private Button backToMenuBtn = null;
 
+    private Action onEnablePlayerInput = null;
+
     private const string allWaveText = "Wave {0, 0}/{1, 0}";
 
     private void Start()
     {
         resumeBtn.onClick.AddListener(() => TogglePause(false));
         backToMenuBtn.onClick.AddListener(BackToMenu);
+    }
+
+    public void Init(Action onEnablePlayerInput)
+    {
+        this.onEnablePlayerInput = onEnablePlayerInput;
     }
 
     public void UpdatePlayerHealth(int currentLives, int maxLives)
@@ -40,8 +49,13 @@ public class GameplayUI : MonoBehaviour
 
     public void TogglePause(bool status)
     {
-        ToggleTimeScale(!status);
         pausePanel.SetActive(status);
+        ToggleTimeScale(!status);
+
+        if (!status)
+        {
+            onEnablePlayerInput?.Invoke();
+        }
     }
 
     private void BackToMenu()

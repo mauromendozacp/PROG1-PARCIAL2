@@ -72,6 +72,13 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         inputController.UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
     }
 
+    public void EnableInput()
+    {
+        if (defeat) return;
+
+        inputController.UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
+    }
+
     private void ApplyGravity()
     {
         if (characterController.isGrounded)
@@ -117,12 +124,14 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         LookAtMouse();
         locomotionController.PlayAttackAnimation();
 
-        inputController.UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
+        inputController.UpdateInputFSM(FSM_INPUT.ONLY_UI);
     }
 
     private void Pause()
     {
         onPause?.Invoke();
+
+        inputController.UpdateInputFSM(FSM_INPUT.ONLY_UI);
     }
 
     private void ReloadArrow()
@@ -154,13 +163,6 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     {
         currentLives = lives;
         onUpdateLives?.Invoke(currentLives, this.lives);
-    }
-
-    private void EnableInput()
-    {
-        if (defeat) return;
-
-        inputController.UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
     }
 
     public void RecieveDamage(int damage)

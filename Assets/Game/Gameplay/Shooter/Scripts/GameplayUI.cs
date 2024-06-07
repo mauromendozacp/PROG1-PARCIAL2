@@ -46,6 +46,9 @@ public class GameplayUI : MonoBehaviour
 
     private void BackToMenu()
     {
+        resumeBtn.interactable = false;
+        backToMenuBtn.interactable = false;
+
         GameManager.Instance.ChangeScene(SceneGame.Menu);
         ToggleTimeScale(true);
     }

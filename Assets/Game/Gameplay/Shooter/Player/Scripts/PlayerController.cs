@@ -1,15 +1,6 @@
 using System;
 
 using UnityEngine;
-using UnityEngine.InputSystem;
-
-public enum FSM_INPUT
-{
-    ENABLE_ALL,
-    MOVEMENT,
-    ATTACK,
-    DISABLE_ALL
-}
 
 public class PlayerController : MonoBehaviour, IRecieveDamage
 {
@@ -24,6 +15,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
     [Header("Reference Settings"), Space]
     [SerializeField] private Transform body = null;
+    [SerializeField] private PlayerInputController inputController = null;
     [SerializeField] private PlayerLocomotionController locomotionController = null;
     [SerializeField] private CharacterController characterController = null;
     [SerializeField] private Camera mainCamera = null;
@@ -38,32 +30,22 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     [SerializeField] private AudioEvent hurtEvent = null;
     [SerializeField] private AudioEvent deathEvent = null;
 
-    private PlayerInput inputAction = null;
-
-    private Vector2 move = Vector2.zero;
     private float fallVelocity = 0f;
-    private bool firePressed = false;
     private Vector3 currentDir = Vector3.zero;
 
     private int currentLives = 0;
     private bool defeat = false;
 
     private Action onDeath = null;
+    private Action onPause = null;
     private Action<int, int> onUpdateLives = null;
-
-    private const string moveInputKey = "move";
-    private const string fireInputKey = "fire";
-
-    private void Awake()
-    {
-        inputAction = GetComponent<PlayerInput>();
-    }
 
     private void Start()
     {
-        locomotionController.Init(attackSpeed, ReloadArrow, FireArrow, onEnableInput: () => UpdateInputFSM(FSM_INPUT.ENABLE_ALL));
+        inputController.Init(Attack, Pause);
+        locomotionController.Init(attackSpeed, ReloadArrow, FireArrow, onEnableInput: () => inputController.UpdateInputFSM(FSM_INPUT.ENABLE_ALL));
 
-        UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
+        inputController.UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
     }
 
     private void Update()
@@ -72,56 +54,24 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
         ApplyGravity();
         Movement();
-        Attack();
         UpdateRotation();
 
-        locomotionController.UpdateIdleRunAnimation(move.magnitude);
+        locomotionController.UpdateIdleRunAnimation(inputController.Move.magnitude);
     }
 
-    public void Init(Action<int, int> onUpdateLives, Action onDeath)
+    public void Init(Action<int, int> onUpdateLives, Action onDeath, Action onPause)
     {
         this.onUpdateLives = onUpdateLives;
         this.onDeath = onDeath;
+        this.onPause = onPause;
 
         UpdateLives(lives);
-    }
-
-    public void UpdateInputFSM(FSM_INPUT fsm)
-    {
-        switch (fsm)
-        {
-            case FSM_INPUT.ENABLE_ALL:
-                inputAction.actions[moveInputKey].Enable();
-                inputAction.actions[fireInputKey].Enable();
-                break;
-            case FSM_INPUT.MOVEMENT:
-                inputAction.actions[moveInputKey].Enable();
-                inputAction.actions[fireInputKey].Disable();
-                break;
-            case FSM_INPUT.ATTACK:
-                inputAction.actions[moveInputKey].Disable();
-                inputAction.actions[fireInputKey].Enable();
-                break;
-            case FSM_INPUT.DISABLE_ALL:
-                inputAction.actions[moveInputKey].Disable();
-                inputAction.actions[fireInputKey].Disable();
-                break;
-        }
     }
 
     public void PlayerDefeat()
     {
         defeat = true;
-    }
-
-    public void OnMove(InputValue value)
-    {
-        move = value.Get<Vector2>();
-    }
-
-    public void OnFire(InputValue value)
-    {
-        firePressed = value.isPressed;
+        inputController.UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
     }
 
     private void ApplyGravity()
@@ -138,9 +88,9 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
     private void Movement()
     {
-        Vector3 movement = new Vector3(move.x, 0f, move.y);
+        Vector3 movement = new Vector3(inputController.Move.x, 0f, inputController.Move.y);
 
-        if (move.magnitude > Mathf.Epsilon)
+        if (inputController.Move.magnitude > Mathf.Epsilon)
         {
             currentDir = movement;
         }
@@ -166,13 +116,15 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
     private void Attack()
     {
-        if (!firePressed) return;
-        firePressed = false;
-
         LookAtMouse();
         locomotionController.PlayAttackAnimation();
 
-        UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
+        inputController.UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
+    }
+
+    private void Pause()
+    {
+        onPause?.Invoke();
     }
 
     private void ReloadArrow()
@@ -221,7 +173,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         else
         {
             locomotionController.PlayRecieveHitAnimation();
-            UpdateInputFSM(FSM_INPUT.MOVEMENT);
+            inputController.UpdateInputFSM(FSM_INPUT.MOVEMENT);
 
             GameManager.Instance.AudioManager.PlayAudio(hurtEvent);
         }

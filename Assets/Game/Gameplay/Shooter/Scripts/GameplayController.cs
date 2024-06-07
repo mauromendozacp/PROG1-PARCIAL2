@@ -15,7 +15,7 @@ public class GameplayController : MonoBehaviour
 
     public void Start()
     {
-        playerController.Init(gameplayUI.UpdatePlayerHealth, PlayerDefeat);
+        playerController.Init(gameplayUI.UpdatePlayerHealth, PlayerDefeat, onPause: () => gameplayUI.TogglePause(true));
         runeController.Init(gameplayUI.UpdateRuneHealth, PlayerDefeat);
         waveController.Init(enemyPoolController, gameplayUI.UpdateWave);
         enemyPoolController.Init(mainCamera, waveController.OnKillEnemy);
@@ -29,7 +29,6 @@ public class GameplayController : MonoBehaviour
     private void PlayerDefeat()
     {
         playerController.PlayerDefeat();
-        playerController.UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
         waveController.StopWave();
         enemyPoolController.EnemyList.ForEach(e => e.SetWinState());
     }

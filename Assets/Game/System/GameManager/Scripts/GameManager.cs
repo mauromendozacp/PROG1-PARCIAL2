@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+
+using UnityEngine;
 
 public enum SceneGame
 {
@@ -26,9 +28,9 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         base.Awake();
     }
 
-    public void ChangeScene(SceneGame nextScene)
+    public void ChangeScene(SceneGame nextScene, Action onComplete = null)
     {
         audioManager.StopCurrentMusic();
-        loadingManager.TransitionScene(nextScene);
+        loadingManager.TransitionScene(nextScene, onComplete);
     }
 }

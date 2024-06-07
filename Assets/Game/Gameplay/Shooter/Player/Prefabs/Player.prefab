@@ -245,6 +245,7 @@ GameObject:
   - component: {fileID: 5386336610017871704}
   - component: {fileID: 6227682143245099968}
   - component: {fileID: 8532991723878580814}
+  - component: {fileID: 3308152024111482864}
   m_Layer: 6
   m_Name: Player Controller
   m_TagString: Untagged
@@ -357,6 +358,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   body: {fileID: 8774147757880241799}
+  inputController: {fileID: 3308152024111482864}
   locomotionController: {fileID: 729923736805070328}
   characterController: {fileID: 5386336610017871704}
   mainCamera: {fileID: 5553771788934677829}
@@ -366,6 +368,18 @@ MonoBehaviour:
   fireArrowEvent: {fileID: 11400000, guid: adbed66d9d27a6545bba0b42d27e6c29, type: 2}
   hurtEvent: {fileID: 0}
   deathEvent: {fileID: 0}
+--- !u!114 &3308152024111482864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2490804252943110080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 491b4632c00fe1a48a335d5eadc2dc84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4627393086828579717
 GameObject:
   m_ObjectHideFlags: 0

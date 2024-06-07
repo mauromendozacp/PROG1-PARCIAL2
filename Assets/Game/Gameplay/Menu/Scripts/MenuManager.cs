@@ -37,6 +37,11 @@ public class MenuManager : MonoBehaviour
     {
         GameManager.Instance.AudioManager.PlayAudio(playSoundEvent);
         GameManager.Instance.ChangeScene(SceneGame.Shooter);
+
+        playBtn.interactable = false;
+        optionsBtn.interactable = false;
+        creditsBtn.interactable = false;
+        exitBtn.interactable = false;
     }
 
     private void ToggleOptionsPanel(bool status)

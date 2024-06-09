@@ -13,11 +13,13 @@ public class WaveController : MonoBehaviour
     private int currentWave = 0;
     private int waveEnemies = 0;
 
+    private Action onPlayerWin = null;
     private Action<int, int> onUpdateWave = null;
 
-    public void Init(EnemyPoolController enemyPoolController, Action<int, int> onUpdateWave)
+    public void Init(EnemyPoolController enemyPoolController, Action onPlayerWin, Action<int, int> onUpdateWave)
     {
         this.enemyPoolController = enemyPoolController;
+        this.onPlayerWin = onPlayerWin;
         this.onUpdateWave = onUpdateWave;
 
         UpdateWave(currentWave);
@@ -58,6 +60,10 @@ public class WaveController : MonoBehaviour
             {
                 UpdateWave(currentWave + 1);
                 StartWave();
+            }
+            else
+            {
+                onPlayerWin?.Invoke();
             }
         }
     }

@@ -79,6 +79,11 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         inputController.UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
     }
 
+    public void EnableInputOnlyUI()
+    {
+        inputController.UpdateInputFSM(FSM_INPUT.ONLY_UI);
+    }
+
     private void ApplyGravity()
     {
         if (characterController.isGrounded)

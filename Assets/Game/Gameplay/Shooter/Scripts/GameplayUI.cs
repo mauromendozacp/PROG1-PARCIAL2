@@ -22,6 +22,10 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private Button retryBtn = null;
     [SerializeField] private Button loseBackToMenuBtn = null;
 
+    [Header("Pause Settings")]
+    [SerializeField] private GameObject winPanel = null;
+    [SerializeField] private Button winBackToMenuBtn = null;
+
     private Action onEnablePlayerInput = null;
 
     private const string allWaveText = "Wave {0, 0}/{1, 0}";
@@ -33,6 +37,8 @@ public class GameplayUI : MonoBehaviour
 
         retryBtn.onClick.AddListener(Retry);
         loseBackToMenuBtn.onClick.AddListener(BackToMenu);
+
+        winBackToMenuBtn.onClick.AddListener(BackToMenu);
     }
 
     public void Init(Action onEnablePlayerInput)
@@ -54,6 +60,11 @@ public class GameplayUI : MonoBehaviour
     public void OpenLosePanel()
     {
         losePanel.SetActive(true);
+    }
+
+    public void OpenWinPanel()
+    {
+        winPanel.SetActive(true);
     }
 
     public void UpdatePlayerHealth(int currentLives, int maxLives)
@@ -86,6 +97,8 @@ public class GameplayUI : MonoBehaviour
 
         retryBtn.interactable = false;
         loseBackToMenuBtn.interactable = false;
+
+        winBackToMenuBtn.interactable = false;
 
         GameManager.Instance.ChangeScene(SceneGame.Menu);
         ToggleTimeScale(true);

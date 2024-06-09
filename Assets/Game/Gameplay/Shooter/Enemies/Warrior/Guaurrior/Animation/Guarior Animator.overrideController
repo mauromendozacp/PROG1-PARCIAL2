@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Guarior Animator
+  m_Controller: {fileID: 9100000, guid: 767beba5ec8c960498135fe8eed4c6b8, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: ba961f31b5cd9e349bc034549e88f2bb, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b79ff7bb68348be479d3db6b7fe8a569, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 490948a79c76c5e478c2b46d0fb1f9c4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1588532e68f51a040bda71c68cfab177, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 465d41ba960652e4db55f7624b262b59, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f0c8c1d913b359a428b42d53947d3e93, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 3cc20957f3e600f419cf1027b6fa7b14, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5d190d8211c88a64281f7b90c69f3eb3, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 474b8a348dc5a7d4887726b71f8e21ec, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 6019f1b4a095b0b4396f5561a51fee89, type: 2}

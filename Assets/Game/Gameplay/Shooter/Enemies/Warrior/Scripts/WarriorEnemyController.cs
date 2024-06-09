@@ -3,10 +3,10 @@ using UnityEngine;
 public class WarriorEnemyController : EnemyController, IRecieveDamage
 {
     [Header("Reference Settings"), Space]
-    [SerializeField] private WarriorLocomotionController locomotionController = null;
-    [SerializeField] private Transform bodyCenterTransform = null;
+    [SerializeField] protected WarriorLocomotionController locomotionController = null;
+    [SerializeField] protected Transform bodyCenterTransform = null;
 
-    private CapsuleCollider capsuleCollider = null;
+    protected CapsuleCollider capsuleCollider = null;
 
     protected override void Awake()
     {
@@ -22,30 +22,11 @@ public class WarriorEnemyController : EnemyController, IRecieveDamage
         switch (state)
         {
             case FSM_ENEMY.IDLE:
-                locomotionController.UpdateIdleRunAnimation(0f);
-                if (GetFocusTarget() != null)
-                {
-                    state = FSM_ENEMY.GO_TO_TARGET;
-                }
+                UpdateIdleState();
 
                 break;
             case FSM_ENEMY.GO_TO_TARGET:
-                if (CheckTargetIsOnFront(out RaycastHit hit))
-                {
-                    AttackTarget(hit);
-                }
-                else
-                {
-                    if (GetFocusTarget() != null)
-                    {
-                        locomotionController.UpdateIdleRunAnimation(1f);
-                        agent.SetDestination(GetFocusTarget().position);
-                    }
-                    else
-                    {
-                        state = FSM_ENEMY.IDLE;
-                    }
-                }
+                UpdateGoToTargetState();
 
                 break;
             case FSM_ENEMY.ATTACK:
@@ -61,7 +42,36 @@ public class WarriorEnemyController : EnemyController, IRecieveDamage
         agent.isStopped = state != FSM_ENEMY.GO_TO_TARGET;
     }
 
-    private bool CheckTargetIsOnFront(out RaycastHit hit)
+    protected virtual void UpdateIdleState()
+    {
+        locomotionController.UpdateIdleRunAnimation(0f);
+        if (GetFocusTarget() != null)
+        {
+            state = FSM_ENEMY.GO_TO_TARGET;
+        }
+    }
+
+    protected virtual void UpdateGoToTargetState()
+    {
+        if (CheckTargetIsOnFront(out RaycastHit hit))
+        {
+            AttackTarget(hit);
+        }
+        else
+        {
+            if (GetFocusTarget() != null)
+            {
+                locomotionController.UpdateIdleRunAnimation(1f);
+                agent.SetDestination(GetFocusTarget().position);
+            }
+            else
+            {
+                SetIdleState();
+            }
+        }
+    }
+
+    protected bool CheckTargetIsOnFront(out RaycastHit hit)
     {
         if (Physics.Raycast(bodyCenterTransform.position, bodyCenterTransform.forward, out RaycastHit hitInfo, distanceToAttack, attackLayer))
         {
@@ -73,17 +83,12 @@ public class WarriorEnemyController : EnemyController, IRecieveDamage
         return false;
     }
 
-    private void SetIdleState()
+    protected void SetIdleState()
     {
         state = FSM_ENEMY.IDLE;
     }
 
-    private void ToggleCollider(bool status)
-    {
-        capsuleCollider.enabled = status;
-    }
-
-    private void AttackTarget(RaycastHit hit)
+    protected void AttackTarget(RaycastHit hit)
     {
         if (hit.collider.gameObject.TryGetComponent(out IRecieveDamage recieveDamage))
         {
@@ -95,6 +100,11 @@ public class WarriorEnemyController : EnemyController, IRecieveDamage
         {
             Debug.LogWarning("Can't attack this object: " + hit.collider.gameObject.name);
         }
+    }
+
+    private void ToggleCollider(bool status)
+    {
+        capsuleCollider.enabled = status;
     }
 
     public override void SetWinState()

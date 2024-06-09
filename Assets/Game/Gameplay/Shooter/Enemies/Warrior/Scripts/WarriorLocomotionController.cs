@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class WarriorLocomotionController : MonoBehaviour
 {
+    protected Animator animator = null;
+
+    private Action onSetIdleState = null;
+    private Action onFinishDeath = null;
+
     private const string idleRunAnimName = "Idle/Run";
     private const string deadAnimName = "Death";
 
     private const string speedKey = "Speed";
     private const string attackKey = "Attack";
     private const string recieveHitKey = "RecieveHit";
-
-    private Animator animator = null;
-    private Action onSetIdleState = null;
-    private Action onFinishDeath = null;
 
     private void Awake()
     {

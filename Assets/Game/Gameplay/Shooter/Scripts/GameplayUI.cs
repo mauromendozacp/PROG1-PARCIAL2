@@ -17,6 +17,11 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private Button resumeBtn = null;
     [SerializeField] private Button backToMenuBtn = null;
 
+    [Header("Pause Settings")]
+    [SerializeField] private GameObject losePanel = null;
+    [SerializeField] private Button retryBtn = null;
+    [SerializeField] private Button loseBackToMenuBtn = null;
+
     private Action onEnablePlayerInput = null;
 
     private const string allWaveText = "Wave {0, 0}/{1, 0}";
@@ -25,11 +30,30 @@ public class GameplayUI : MonoBehaviour
     {
         resumeBtn.onClick.AddListener(() => TogglePause(false));
         backToMenuBtn.onClick.AddListener(BackToMenu);
+
+        retryBtn.onClick.AddListener(Retry);
+        loseBackToMenuBtn.onClick.AddListener(BackToMenu);
     }
 
     public void Init(Action onEnablePlayerInput)
     {
         this.onEnablePlayerInput = onEnablePlayerInput;
+    }
+
+    public void TogglePause(bool status)
+    {
+        pausePanel.SetActive(status);
+        ToggleTimeScale(!status);
+
+        if (!status)
+        {
+            onEnablePlayerInput?.Invoke();
+        }
+    }
+
+    public void OpenLosePanel()
+    {
+        losePanel.SetActive(true);
     }
 
     public void UpdatePlayerHealth(int currentLives, int maxLives)
@@ -46,22 +70,22 @@ public class GameplayUI : MonoBehaviour
     {
         waveText.text = string.Format(allWaveText, currentWave, maxWave);
     }
-
-    public void TogglePause(bool status)
+    
+    private void Retry()
     {
-        pausePanel.SetActive(status);
-        ToggleTimeScale(!status);
+        retryBtn.interactable = false;
+        loseBackToMenuBtn.interactable = false;
 
-        if (!status)
-        {
-            onEnablePlayerInput?.Invoke();
-        }
+        GameManager.Instance.ChangeScene(SceneGame.Shooter);
     }
 
     private void BackToMenu()
     {
         resumeBtn.interactable = false;
         backToMenuBtn.interactable = false;
+
+        retryBtn.interactable = false;
+        loseBackToMenuBtn.interactable = false;
 
         GameManager.Instance.ChangeScene(SceneGame.Menu);
         ToggleTimeScale(true);

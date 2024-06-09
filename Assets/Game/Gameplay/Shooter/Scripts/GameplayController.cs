@@ -29,6 +29,7 @@ public class GameplayController : MonoBehaviour
 
     private void PlayerDefeat()
     {
+        gameplayUI.OpenLosePanel();
         playerController.PlayerDefeat();
         waveController.StopWave();
         enemyPoolController.EnemyList.ForEach(e => e.SetWinState());

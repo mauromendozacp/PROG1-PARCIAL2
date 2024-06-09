@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     public void PlayerDefeat()
     {
         defeat = true;
-        inputController.UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
+        inputController.UpdateInputFSM(FSM_INPUT.ONLY_UI);
     }
 
     public void EnableInput()

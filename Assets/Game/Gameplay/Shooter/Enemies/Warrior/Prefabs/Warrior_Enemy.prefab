@@ -52,6 +52,7 @@ MonoBehaviour:
   damage: 1
   speed: 3.5
   distanceToAttack: 1
+  rotationSpeed: 120
   attackLayer:
     serializedVersion: 2
     m_Bits: 320

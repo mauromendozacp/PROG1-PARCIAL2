@@ -30,6 +30,8 @@ public class WarriorEnemyController : EnemyController, IRecieveDamage
 
                 break;
             case FSM_ENEMY.ATTACK:
+                UpdateAttackState();
+
                 break;
             case FSM_ENEMY.HURT:
                 break;
@@ -68,6 +70,19 @@ public class WarriorEnemyController : EnemyController, IRecieveDamage
             {
                 SetIdleState();
             }
+        }
+    }
+
+    protected virtual void UpdateAttackState()
+    {
+        Transform currentTarget = GetFocusTarget();
+        if (currentTarget != null)
+        {
+            Vector3 targetDir = (currentTarget.position - transform.position).normalized;
+            targetDir.y = 0f;
+
+            Quaternion toRot = Quaternion.LookRotation(targetDir, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRot, rotationSpeed * Time.deltaTime);
         }
     }
 

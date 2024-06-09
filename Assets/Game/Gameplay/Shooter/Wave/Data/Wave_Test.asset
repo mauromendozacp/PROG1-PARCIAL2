@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2624a262641d649a383d681884224a, type: 3}
   m_Name: Wave_Test
   m_EditorClassIdentifier: 
-  availableEnemies: 02000000
-  enemyCount: 5
+  availableEnemies: 0200000000000000
+  enemyCount: 10
   spawnDelay: 1

@@ -20,6 +20,7 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
     [SerializeField] protected int damage = 0;
     [SerializeField] protected float speed = 0f;
     [SerializeField] protected float distanceToAttack = 0f;
+    [SerializeField] protected float rotationSpeed = 0f;
     [SerializeField] protected LayerMask attackLayer = default;
 
     [Header("Life Settings"), Space]

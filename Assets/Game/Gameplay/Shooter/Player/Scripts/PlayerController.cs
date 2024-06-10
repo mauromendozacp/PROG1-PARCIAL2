@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 
 using UnityEngine;
 
@@ -9,9 +10,20 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     [SerializeField] private float mass = 1f;
     [SerializeField] private float moveSpeed = 0f;
     [SerializeField] private float rotationSpeed = 0f;
+
+    [Header("Attack Settings"), Space]
     [SerializeField] [Range(.5f, 3f)] private float attackSpeed = 0f;
     [SerializeField] private LayerMask rangeAttackLayer = default;
     [SerializeField] private LayerMask attackObjectsLayer = default;
+
+    [Header("Arrow Settings"), Space]
+    [SerializeField] private BorrowController arrowController = null;
+    [SerializeField] private float arrowForce = 0f;
+
+    [Header("Roll Settings"), Space]
+    [SerializeField] private AnimationCurve rollCurve = null;
+    [SerializeField] private float rollSpeed = 0f;
+    [SerializeField] private float rollDuration = 0f;
 
     [Header("Reference Settings"), Space]
     [SerializeField] private Transform body = null;
@@ -19,10 +31,6 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     [SerializeField] private PlayerLocomotionController locomotionController = null;
     [SerializeField] private CharacterController characterController = null;
     [SerializeField] private Camera mainCamera = null;
-
-    [Header("Arrow Settings"), Space]
-    [SerializeField] private BorrowController arrowController = null;
-    [SerializeField] private float arrowForce = 0f;
 
     [Header("Sounds Settings")]
     [SerializeField] private AudioEvent reloadArrowEvent = null;
@@ -35,6 +43,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
     private int currentLives = 0;
     private bool defeat = false;
+    private bool invinsible = false;
 
     private Action onDeath = null;
     private Action onPause = null;
@@ -42,8 +51,10 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
     private void Start()
     {
-        inputController.Init(Attack, Pause);
+        inputController.Init(Attack, Roll, Pause);
         locomotionController.Init(attackSpeed, ReloadArrow, FireArrow, EnableInput);
+
+        currentLives = lives;
     }
 
     private void Update()
@@ -69,7 +80,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     public void PlayerDefeat()
     {
         defeat = true;
-        inputController.UpdateInputFSM(FSM_INPUT.ONLY_UI);
+        EnableInputOnlyUI();
     }
 
     public void EnableInput()
@@ -129,14 +140,40 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         LookAtMouse();
         locomotionController.PlayAttackAnimation();
 
-        inputController.UpdateInputFSM(FSM_INPUT.ONLY_UI);
+        inputController.UpdateInputFSM(FSM_INPUT.DISABLE_INTERACTIONS);
+    }
+
+    private void Roll()
+    {
+        if (inputController.Move.magnitude < Mathf.Epsilon) return;
+        Vector3 moveDir = new Vector3(inputController.Move.x, 0f, inputController.Move.y);
+
+        locomotionController.PlayRollAnimation();
+        inputController.UpdateInputFSM(FSM_INPUT.DISABLE_INTERACTIONS);
+
+        StartCoroutine(RollCoroutine());
+        IEnumerator RollCoroutine()
+        {
+            float timer = 0f;
+
+            while (timer < rollDuration)
+            {
+                timer += Time.deltaTime;
+                Vector3 move = moveDir * rollCurve.Evaluate(timer / rollDuration) * rollSpeed * Time.deltaTime;
+
+                characterController.Move(move);
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            EnableInput();
+        }
     }
 
     private void Pause()
     {
+        EnableInputOnlyUI();
         onPause?.Invoke();
-
-        inputController.UpdateInputFSM(FSM_INPUT.ONLY_UI);
     }
 
     private void ReloadArrow()
@@ -172,6 +209,8 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
     public void RecieveDamage(int damage)
     {
+        if (invinsible) return;
+
         UpdateLives(Mathf.Clamp(currentLives - damage, 0, lives));
 
         if (CheckIsDead())

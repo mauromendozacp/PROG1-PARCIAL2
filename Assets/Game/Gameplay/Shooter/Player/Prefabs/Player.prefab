@@ -58,8 +58,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1550035654816380785}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.36458725, y: -0, z: -0, w: 0.9311693}
-  m_LocalPosition: {x: 0, y: 8, z: -8.650002}
+  m_LocalRotation: {x: 0.36458728, y: -0, z: -0, w: 0.9311693}
+  m_LocalPosition: {x: 0, y: 8, z: -8.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -318,13 +318,48 @@ MonoBehaviour:
   attackObjectsLayer:
     serializedVersion: 2
     m_Bits: 128
+  arrowController: {fileID: 4874900873115443331}
+  arrowForce: 25
+  rollCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: -0
+      outSlope: -0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.08692914
+    - serializedVersion: 3
+      time: 0.49892956
+      value: 1.0042626
+      inSlope: 0.5032318
+      outSlope: 0.5032318
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  rollSpeed: 10
+  rollDuration: 1
   body: {fileID: 8774147757880241799}
   inputController: {fileID: 3308152024111482864}
   locomotionController: {fileID: 729923736805070328}
   characterController: {fileID: 5386336610017871704}
   mainCamera: {fileID: 5553771788934677829}
-  arrowController: {fileID: 4874900873115443331}
-  arrowForce: 25
   reloadArrowEvent: {fileID: 11400000, guid: beccf12c9b484df4aa51b97cfffc9bba, type: 2}
   fireArrowEvent: {fileID: 11400000, guid: adbed66d9d27a6545bba0b42d27e6c29, type: 2}
   hurtEvent: {fileID: 0}
@@ -399,8 +434,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4640356039453937420}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.36458725, y: -0, z: -0, w: 0.9311693}
-  m_LocalPosition: {x: 0, y: 8, z: -8.650002}
+  m_LocalRotation: {x: 0.36458728, y: -0, z: -0, w: 0.9311693}
+  m_LocalPosition: {x: 0, y: 8, z: -8.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -624,6 +659,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2852485849040738490}
     m_Modifications:
+    - target: {fileID: 100002, guid: 67e4903d70c3a984dbdc388e7bd027a2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: 67e4903d70c3a984dbdc388e7bd027a2, type: 3}
       propertyPath: m_Name
       value: Mesh

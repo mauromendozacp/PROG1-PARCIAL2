@@ -10,6 +10,7 @@ public class PlayerLocomotionController : MonoBehaviour
     private const string attackKey = "Attack";
     private const string recieveHitKey = "RecieveHit";
     private const string attackSpeedKey = "AttackSpeed";
+    private const string rollKey = "Roll";
 
     private Animator animator = null;
     private Action onReloadArrow = null;
@@ -49,6 +50,11 @@ public class PlayerLocomotionController : MonoBehaviour
     public void PlayAttackAnimation()
     {
         animator.SetTrigger(attackKey);
+    }
+
+    public void PlayRollAnimation()
+    {
+        animator.SetTrigger(rollKey);
     }
 
     public void ReloadArrow()

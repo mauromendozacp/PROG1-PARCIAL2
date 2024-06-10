@@ -9,6 +9,7 @@ public enum FSM_INPUT
     MOVEMENT,
     ATTACK,
     ONLY_UI,
+    DISABLE_INTERACTIONS,
     DISABLE_ALL
 }
 
@@ -17,19 +18,22 @@ public class PlayerInputController : MonoBehaviour
     private PlayerInputActions inputAction = null;
 
     private Action onFire = null;
+    private Action onRoll = null;
     private Action onPause = null;
 
     public Vector2 Move { get => GetMoveValue(); }
 
-    public void Init(Action onFire, Action onPause)
+    public void Init(Action onFire, Action onRoll, Action onPause)
     {
         this.onFire = onFire;
+        this.onRoll = onRoll;
         this.onPause = onPause;
 
         inputAction = new PlayerInputActions();
 
         inputAction.Player.Fire.performed += OnFire;
-        inputAction.UI.Pause.performed += OnPause;
+        inputAction.Player.Roll.performed += OnRoll;
+        inputAction.Player.Pause.performed += OnPause;
 
         UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
     }
@@ -37,6 +41,11 @@ public class PlayerInputController : MonoBehaviour
     public void OnFire(InputAction.CallbackContext context)
     {
         onFire?.Invoke();
+    }
+
+    public void OnRoll(InputAction.CallbackContext context)
+    {
+        onRoll?.Invoke();
     }
 
     public void OnPause(InputAction.CallbackContext context)
@@ -55,14 +64,22 @@ public class PlayerInputController : MonoBehaviour
             case FSM_INPUT.MOVEMENT:
                 inputAction.Player.Fire.Disable();
                 inputAction.Player.Move.Enable();
+                inputAction.Player.Roll.Disable();
                 break;
             case FSM_INPUT.ATTACK:
                 inputAction.Player.Fire.Enable();
                 inputAction.Player.Move.Disable();
+                inputAction.Player.Roll.Disable();
                 break;
             case FSM_INPUT.ONLY_UI:
                 inputAction.Player.Disable();
                 inputAction.UI.Enable();
+                break;
+            case FSM_INPUT.DISABLE_INTERACTIONS:
+                inputAction.Player.Fire.Disable();
+                inputAction.Player.Move.Disable();
+                inputAction.Player.Roll.Disable();
+                inputAction.Player.Pause.Enable();
                 break;
             case FSM_INPUT.DISABLE_ALL:
                 inputAction.Player.Disable();

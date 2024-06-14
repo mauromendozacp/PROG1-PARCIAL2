@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     private void Start()
     {
         inputController.Init(Attack, Roll, Pause);
-        locomotionController.Init(attackSpeed, ReloadArrow, FireArrow, EnableInput);
+        locomotionController.Init(attackSpeed, ReloadArrow, FireArrow, onEnableInput: () => EnableInput());
 
         currentLives = lives;
     }
@@ -83,9 +83,9 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         EnableInputOnlyUI();
     }
 
-    public void EnableInput()
+    public void EnableInput(bool force = false)
     {
-        if (defeat) return;
+        if (force || inputController.CurrentInputState == FSM_INPUT.ONLY_UI) return;
 
         inputController.UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
     }

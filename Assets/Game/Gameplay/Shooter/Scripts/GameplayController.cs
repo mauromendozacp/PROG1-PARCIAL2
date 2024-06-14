@@ -12,6 +12,7 @@ public class GameplayController : MonoBehaviour
     [SerializeField] private WaveController waveController = null;
     [SerializeField] private EnemyPoolController enemyPoolController = null;
     [SerializeField] private RuneController runeController = null;
+    [SerializeField] private WinAnimationController winAnimationController = null;
 
     public void Start()
     {
@@ -20,7 +21,7 @@ public class GameplayController : MonoBehaviour
         waveController.Init(enemyPoolController, PlayerWin, gameplayUI.UpdateWave);
         enemyPoolController.Init(mainCamera, waveController.OnKillEnemy);
         enemyPoolController.SetMainTarget(runeController.transform);
-        gameplayUI.Init(playerController.EnableInput);
+        gameplayUI.Init(onEnablePlayerInput: () => playerController.EnableInput(true));
 
         GameManager.Instance.AudioManager.PlayAudio(musicEvent);
 
@@ -37,7 +38,8 @@ public class GameplayController : MonoBehaviour
 
     private void PlayerWin()
     {
-        gameplayUI.OpenWinPanel();
         playerController.EnableInputOnlyUI();
+
+        winAnimationController.PlayWinAnimation(runeController.transform.position, gameplayUI.OpenWinPanel);
     }
 }

@@ -16,12 +16,14 @@ public enum FSM_INPUT
 public class PlayerInputController : MonoBehaviour
 {
     private PlayerInputActions inputAction = null;
+    private FSM_INPUT currentInputState = default;
 
     private Action onFire = null;
     private Action onRoll = null;
     private Action onPause = null;
 
     public Vector2 Move { get => GetMoveValue(); }
+    public FSM_INPUT CurrentInputState { get => currentInputState; }
 
     public void Init(Action onFire, Action onRoll, Action onPause)
     {
@@ -86,6 +88,8 @@ public class PlayerInputController : MonoBehaviour
                 inputAction.UI.Disable();
                 break;
         }
+
+        currentInputState = fsm;
     }
 
     private Vector2 GetMoveValue()

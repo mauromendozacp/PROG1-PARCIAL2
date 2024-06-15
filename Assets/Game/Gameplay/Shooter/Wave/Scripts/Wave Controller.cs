@@ -34,6 +34,8 @@ public class WaveController : MonoBehaviour
         StartCoroutine(SpawnEnemiesCoroutine());
         IEnumerator SpawnEnemiesCoroutine()
         {
+            yield return new WaitForSeconds(wave.StartWaveDelay);
+
             int spawnCount = 0;
             while (spawnCount < wave.EnemyCount)
             {

@@ -3,7 +3,7 @@ using System;
 public enum ENEMY_TYPE
 {
     SKELETON,
-    GUARRIOR,
+    GUAURRIOR,
     GOLEM
 }
 

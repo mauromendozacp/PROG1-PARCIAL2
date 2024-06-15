@@ -44,8 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0630979704dda024a8c710413375a9e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPoolController: {fileID: 0}
-  spawnDelay: 1.5
-  waveTime: 360
-  enemyMainTarget: {fileID: 0}
+  waves:
+  - {fileID: 11400000, guid: 9a84e7053dae19d4284201bd36bb69c1, type: 2}
   enemySpawns: []

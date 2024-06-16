@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         if (instance == null)
         {
             loadingManager.LoadingScene(SceneGame.Loading);
+            audioManager.Init();
         }
 
         base.Awake();

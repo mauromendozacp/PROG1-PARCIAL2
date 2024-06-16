@@ -23,6 +23,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Button closeOptionsBtn = null;
     [SerializeField] private Button closeCreditsBtn = null;
 
+    [Header("Sounds Configuration")]
+    [SerializeField] private Slider sfxSlider = null;
+    [SerializeField] private Slider musicSlider = null;
+
     private PlayerInputActions inputAction = null;
 
     private void Start()
@@ -35,6 +39,12 @@ public class MenuManager : MonoBehaviour
         exitBtn.onClick.AddListener(ExitGame);
         closeOptionsBtn.onClick.AddListener(() => ToggleOptionsPanel(false));
         closeCreditsBtn.onClick.AddListener(() => ToggleOptionsCredits(false));
+
+        sfxSlider.onValueChanged.AddListener(GameManager.Instance.AudioManager.UpdateSfxVolume);
+        musicSlider.onValueChanged.AddListener(GameManager.Instance.AudioManager.UpdateMusicVolume);
+
+        sfxSlider.value = GameManager.Instance.AudioManager.SfxVolume;
+        musicSlider.value = GameManager.Instance.AudioManager.MusicVolume;
 
         inputAction = new PlayerInputActions();
         inputAction.UI.Submit.performed += PlayGame;

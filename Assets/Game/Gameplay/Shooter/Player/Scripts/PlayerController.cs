@@ -95,6 +95,11 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         inputController.UpdateInputFSM(FSM_INPUT.ONLY_UI);
     }
 
+    public void IncreaseLives(int increaseLives)
+    {
+        UpdateLives(currentLives + increaseLives);
+    }
+
     private void ApplyGravity()
     {
         if (characterController.isGrounded)
@@ -201,17 +206,17 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         return currentLives <= 0;
     }
 
-    private void UpdateLives(int lives)
+    private void UpdateLives(int newLives)
     {
-        currentLives = lives;
-        onUpdateLives?.Invoke(currentLives, this.lives);
+        currentLives = Mathf.Clamp(newLives, 0, lives);
+        onUpdateLives?.Invoke(currentLives, lives);
     }
 
     public void RecieveDamage(int damage)
     {
         if (invinsible) return;
 
-        UpdateLives(Mathf.Clamp(currentLives - damage, 0, lives));
+        UpdateLives(currentLives - damage);
 
         if (CheckIsDead())
         {

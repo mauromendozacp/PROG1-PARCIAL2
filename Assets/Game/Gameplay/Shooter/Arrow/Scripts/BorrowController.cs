@@ -26,7 +26,7 @@ public class BorrowController : MonoBehaviour
     private Arrow CreateArrow()
     {
         Arrow arrowItem = Instantiate(arrowPrefab, poolHolder);
-        arrowItem.Init(targetLayer, (arrow) => arrowPool.Release(arrow));
+        arrowItem.Init(targetLayer, () => arrowPool.Release(arrowItem));
 
         return arrowItem;
     }

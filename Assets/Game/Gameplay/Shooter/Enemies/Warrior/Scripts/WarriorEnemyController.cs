@@ -14,7 +14,7 @@ public class WarriorEnemyController : EnemyController, IRecieveDamage
 
         capsuleCollider = GetComponent<CapsuleCollider>();
 
-        locomotionController.Init(SetIdleState, onFinishDeath: () => onRelease?.Invoke(this));
+        locomotionController.Init(SetIdleState, onFinishDeath: () => onRelease.Invoke());
     }
 
     protected override void UpdateFSM()

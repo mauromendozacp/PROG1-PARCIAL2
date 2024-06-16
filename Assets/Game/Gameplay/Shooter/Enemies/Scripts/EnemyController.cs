@@ -41,7 +41,7 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
     protected int currentLives = 0;
 
     protected Action onKill = null;
-    protected Action<EnemyController> onRelease = null;
+    protected Action onRelease = null;
 
     protected virtual void Awake()
     {
@@ -72,7 +72,7 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
         }
     }
 
-    public void Init(Camera mainCamera, Action onKill, Action<EnemyController> onRelease)
+    public void Init(Camera mainCamera, Action onKill, Action onRelease)
     {
         this.mainCamera = mainCamera;
         this.onKill = onKill;

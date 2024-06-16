@@ -11,21 +11,32 @@ public class GameplayController : MonoBehaviour
     [SerializeField] private PlayerController playerController = null;
     [SerializeField] private WaveController waveController = null;
     [SerializeField] private EnemyPoolController enemyPoolController = null;
+    [SerializeField] private ConsumablePoolController consumablePoolController = null;
     [SerializeField] private RuneController runeController = null;
     [SerializeField] private WinAnimationController winAnimationController = null;
 
     public void Start()
     {
+        GameManager.Instance.AudioManager.PlayAudio(musicEvent);
+
+        StartControllers();
+        gameplayUI.Init(onEnablePlayerInput: () => playerController.EnableInput(true));
+
+        waveController.StartWave();
+    }
+
+    private void StartControllers()
+    {
         playerController.Init(gameplayUI.UpdatePlayerHealth, PlayerDefeat, onPause: () => gameplayUI.TogglePause(true));
         runeController.Init(gameplayUI.UpdateRuneHealth, PlayerDefeat);
         waveController.Init(enemyPoolController, PlayerWin, gameplayUI.UpdateWave);
-        enemyPoolController.Init(mainCamera, waveController.OnKillEnemy);
-        enemyPoolController.SetMainTarget(runeController.transform);
-        gameplayUI.Init(onEnablePlayerInput: () => playerController.EnableInput(true));
-
-        GameManager.Instance.AudioManager.PlayAudio(musicEvent);
-
-        waveController.StartWave();
+        consumablePoolController.Init();
+        enemyPoolController.Init(runeController.transform, mainCamera,
+            onKillEnemy: (position) =>
+            {
+                waveController.OnKillEnemy();
+                consumablePoolController.TryDropConsumable(position);
+            });
     }
 
     private void PlayerDefeat()

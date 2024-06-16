@@ -6280,6 +6280,74 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4371144052285426531, guid: c0c32672766a81647b04690fc9ed3595, type: 3}
   m_PrefabInstance: {fileID: 975339933}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &996207736
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 382450482940889852, guid: 96257edbbb18b1e4c8ee9bf208a8678e, type: 3}
+      propertyPath: m_Name
+      value: ConsumablePoolController
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715522365341473667, guid: 96257edbbb18b1e4c8ee9bf208a8678e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715522365341473667, guid: 96257edbbb18b1e4c8ee9bf208a8678e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715522365341473667, guid: 96257edbbb18b1e4c8ee9bf208a8678e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715522365341473667, guid: 96257edbbb18b1e4c8ee9bf208a8678e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715522365341473667, guid: 96257edbbb18b1e4c8ee9bf208a8678e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715522365341473667, guid: 96257edbbb18b1e4c8ee9bf208a8678e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715522365341473667, guid: 96257edbbb18b1e4c8ee9bf208a8678e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715522365341473667, guid: 96257edbbb18b1e4c8ee9bf208a8678e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715522365341473667, guid: 96257edbbb18b1e4c8ee9bf208a8678e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715522365341473667, guid: 96257edbbb18b1e4c8ee9bf208a8678e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 96257edbbb18b1e4c8ee9bf208a8678e, type: 3}
+--- !u!114 &996207737 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -3562141896503575290, guid: 96257edbbb18b1e4c8ee9bf208a8678e, type: 3}
+  m_PrefabInstance: {fileID: 996207736}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e4227217b105f84e91e4d81b9d123d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &997673910
 GameObject:
   m_ObjectHideFlags: 0
@@ -8143,6 +8211,7 @@ MonoBehaviour:
   playerController: {fileID: 708882680}
   waveController: {fileID: 2097766449}
   enemyPoolController: {fileID: 2004809858}
+  consumablePoolController: {fileID: 996207737}
   runeController: {fileID: 262059273}
   winAnimationController: {fileID: 6153715488052162522}
 --- !u!1001 &1341104558
@@ -13381,6 +13450,7 @@ SceneRoots:
   - {fileID: 708882679}
   - {fileID: 262059272}
   - {fileID: 2004809857}
+  - {fileID: 996207736}
   - {fileID: 245990490}
   - {fileID: 1742522290}
   - {fileID: 1559179809}

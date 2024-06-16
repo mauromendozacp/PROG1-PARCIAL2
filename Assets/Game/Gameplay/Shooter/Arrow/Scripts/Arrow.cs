@@ -9,7 +9,7 @@ public class Arrow : MonoBehaviour
     private Rigidbody rb = null;
     private int damage = 0;
 
-    private Action<Arrow> onRelease = null;
+    private Action onRelease = null;
 
     private void Awake()
     {
@@ -24,11 +24,11 @@ public class Arrow : MonoBehaviour
             IRecieveDamage recieveDamage = collision.gameObject.GetComponent<IRecieveDamage>();
             recieveDamage?.RecieveDamage(damage);
 
-            onRelease?.Invoke(this);
+            onRelease?.Invoke();
         }
     }
 
-    public void Init(LayerMask targetLayer, Action<Arrow> onRelease)
+    public void Init(LayerMask targetLayer, Action onRelease)
     {
         this.targetLayer = targetLayer;
         this.onRelease = onRelease;

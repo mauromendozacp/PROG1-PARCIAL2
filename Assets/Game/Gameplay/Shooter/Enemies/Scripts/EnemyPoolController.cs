@@ -17,8 +17,10 @@ public class EnemyPoolController : MonoBehaviour
 
     public List<EnemyController> EnemyList => enemyList;
 
-    public void Init(Camera mainCamera, Action onKillEnemy)
+    public void Init(Transform enemyMainTarget, Camera mainCamera, Action<Vector3> onKillEnemy)
     {
+        this.enemyMainTarget = enemyMainTarget;
+
         enemyPoolDict = new Dictionary<ENEMY_TYPE, ObjectPool<EnemyController>>();
         enemyList = new List<EnemyController>();
 
@@ -34,7 +36,15 @@ public class EnemyPoolController : MonoBehaviour
                 createFunc: () =>
                 {
                     EnemyController enemy = Instantiate(enemyPrefab, enemyHolder.transform);
-                    enemy.Init(mainCamera, onKillEnemy, (e) => enemyPoolDict[enemyId].Release(e));
+                    enemy.Init(mainCamera, 
+                        onKill: () =>
+                        {
+                            onKillEnemy.Invoke(enemy.transform.position);
+                        }, 
+                        onRelease: () =>
+                        {
+                            enemyPoolDict[enemyId].Release(enemy);
+                        });
 
                     return enemy;
                 }, 
@@ -47,13 +57,6 @@ public class EnemyPoolController : MonoBehaviour
         EnemyController enemy = GetRandomEnemy();
         enemy.transform.position = spawnPosition;
         enemy.ToggleAgent(true);
-    }
-
-    public void SetMainTarget(Transform enemyMainTarget)
-    {
-        this.enemyMainTarget = enemyMainTarget;
-
-        enemyList.ForEach((enemy) => enemy.SetMainTarget(enemyMainTarget));
     }
 
     public void SetAvailableEnemies(ENEMY_TYPE[] availableEnemies)

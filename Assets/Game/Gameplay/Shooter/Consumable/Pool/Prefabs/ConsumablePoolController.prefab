@@ -50,3 +50,4 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 1.5, z: 0}
   consumables:
   - {fileID: 11400000, guid: 2377d42e3e5ef4e49a176322762ec7ec, type: 2}
+  - {fileID: 11400000, guid: c587c0c0d06c1ec4fbb26016e0fb32c7, type: 2}

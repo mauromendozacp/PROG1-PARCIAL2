@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3a15ed61b8317444a0fdd3f973774da, type: 3}
-  m_Name: MeatConsumable
+  m_Script: {fileID: 11500000, guid: ef1525e40ee196c46a8a4b337c516443, type: 3}
+  m_Name: PotionConsumable
   m_EditorClassIdentifier: 
-  id: meat
-  prefab: {fileID: 7666039916578124948, guid: 82d3d83f533c59f41874dad84c242422, type: 3}
-  dropChance: 20
-  healLives: 2
+  id: potion
+  prefab: {fileID: 2930636703716953785, guid: 897e9a30300cce94ab55c9193a48e6b4, type: 3}
+  dropChance: 30
+  increaseSpeedPorc: 50
+  duration: 5

@@ -42,8 +42,12 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     private Vector3 currentDir = Vector3.zero;
 
     private int currentLives = 0;
+    private float currentMoveSpeed = 0f;
+
     private bool defeat = false;
     private bool invinsible = false;
+
+    private IEnumerator increaseMoveSpeedCoroutine = null;
 
     private Action onDeath = null;
     private Action onPause = null;
@@ -55,6 +59,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         locomotionController.Init(attackSpeed, ReloadArrow, FireArrow, onEnableInput: () => EnableInput());
 
         currentLives = lives;
+        currentMoveSpeed = moveSpeed;
     }
 
     private void Update()
@@ -100,6 +105,27 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         UpdateLives(currentLives + increaseLives);
     }
 
+    public void IncreaseMoveSpeed(float increaseSpeedPorc, float duration)
+    {
+        if (increaseMoveSpeedCoroutine != null)
+        {
+            StopCoroutine(increaseMoveSpeedCoroutine);
+        }
+
+        increaseMoveSpeedCoroutine = IncreaseMoveSpeedCoroutine();
+        StartCoroutine(increaseMoveSpeedCoroutine);
+
+        IEnumerator IncreaseMoveSpeedCoroutine()
+        {
+            currentMoveSpeed = moveSpeed * (increaseSpeedPorc + 100) / 100;
+
+            yield return new WaitForSeconds(duration);
+
+            currentMoveSpeed = moveSpeed;
+            increaseMoveSpeedCoroutine = null;
+        }
+    }
+
     private void ApplyGravity()
     {
         if (characterController.isGrounded)
@@ -123,7 +149,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
         movement.y = fallVelocity;
 
-        characterController.Move(movement * Time.deltaTime * moveSpeed);
+        characterController.Move(movement * Time.deltaTime * currentMoveSpeed);
     }
 
     private void LookAtMouse()

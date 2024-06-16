@@ -213,6 +213,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Submit",
+                    "type": "Button",
+                    "id": "df8d1c83-be33-49d7-a162-4b4ac3edd4c9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Click",
                     "type": "PassThrough",
                     "id": "463eb690-87aa-4211-8985-115d40e4959c",
@@ -297,6 +306,17 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e0eb28cb-4add-4c0e-af95-48397a9d8dc5",
+                    "path": "*/{Submit}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

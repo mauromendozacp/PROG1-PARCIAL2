@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
@@ -13,35 +14,47 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Button creditsBtn = null;
     [SerializeField] private Button exitBtn = null;
 
-    [Header("Extra Panel Configuration")]
+    [Header("Panel Configuration")]
     [SerializeField] private GameObject optionsPanel = null;
     [SerializeField] private GameObject creditsPanel = null;
+    [SerializeField] private GameObject tutorialPanel = null;
 
     [Header("Extra Buttons Configuration")]
     [SerializeField] private Button closeOptionsBtn = null;
     [SerializeField] private Button closeCreditsBtn = null;
 
+    private PlayerInputActions inputAction = null;
+
     private void Start()
     {
         GameManager.Instance.AudioManager.PlayAudio(musicEvent);
 
-        playBtn.onClick.AddListener(PlayGame);
+        playBtn.onClick.AddListener(OpenTutorialPanel);
         optionsBtn.onClick.AddListener(() => ToggleOptionsPanel(true));
         creditsBtn.onClick.AddListener(() => ToggleOptionsCredits(true));
         exitBtn.onClick.AddListener(ExitGame);
         closeOptionsBtn.onClick.AddListener(() => ToggleOptionsPanel(false));
         closeCreditsBtn.onClick.AddListener(() => ToggleOptionsCredits(false));
+
+        inputAction = new PlayerInputActions();
+        inputAction.UI.Submit.performed += PlayGame;
+
+        inputAction.UI.Submit.Disable();
     }
 
-    private void PlayGame()
+    private void PlayGame(InputAction.CallbackContext context)
     {
         GameManager.Instance.AudioManager.PlayAudio(playSoundEvent);
         GameManager.Instance.ChangeScene(SceneGame.Shooter);
 
-        playBtn.interactable = false;
-        optionsBtn.interactable = false;
-        creditsBtn.interactable = false;
-        exitBtn.interactable = false;
+        inputAction.UI.Submit.Disable();
+    }
+
+    private void OpenTutorialPanel()
+    {
+        tutorialPanel.SetActive(true);
+
+        inputAction.UI.Submit.Enable();
     }
 
     private void ToggleOptionsPanel(bool status)

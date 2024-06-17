@@ -1,10 +1,14 @@
 using System;
+
 using UnityEngine;
 
 public class Rock : MonoBehaviour
 {
     [SerializeField] private LayerMask impactLayer = default;
     [SerializeField] private float attackRadius = 0f;
+
+    [SerializeField] private GameObject impactRockParticleGO = null;
+    [SerializeField] private float particleDuration = 0f;
 
     private Rigidbody rigid = null;
     private SphereCollider sphereCollider = null;
@@ -29,6 +33,7 @@ public class Rock : MonoBehaviour
             ApplyAttack();
             TogglePhysics(false);
             Toggle(false);
+            CreateImpactRockParticle();
 
             onDespawn?.Invoke();
         }
@@ -68,5 +73,13 @@ public class Rock : MonoBehaviour
                 recieveDamage.RecieveDamage(damage);
             }
         }
+    }
+
+    private void CreateImpactRockParticle()
+    {
+        GameObject particleGO = Instantiate(impactRockParticleGO);
+        particleGO.transform.position = transform.position;
+
+        Destroy(particleGO, particleDuration);
     }
 }

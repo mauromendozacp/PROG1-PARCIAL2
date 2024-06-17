@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 23234832734738174}
   - component: {fileID: 7219449063180696556}
   - component: {fileID: 7939606945989620177}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,6 +52,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 328
   attackRadius: 5
+  impactRockParticleGO: {fileID: 1758473627833946668, guid: 9b21333b068a5084ba09535839bee3c8, type: 3}
+  particleDuration: 1
 --- !u!33 &33546315007907412
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -142,7 +144,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 1152
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0

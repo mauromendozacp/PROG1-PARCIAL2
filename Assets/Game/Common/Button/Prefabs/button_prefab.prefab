@@ -330,7 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caeb315d6cc8a7c40aae922fe96bab35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickEvent: {fileID: 0}
+  clickEvent: {fileID: 11400000, guid: 2788695fad0c3764f992520a6744dd8d, type: 2}
   rectTransform: {fileID: 5176320719959721035}
   normalSize: 1
   selectedSize: 1.25

@@ -1544,6 +1544,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6469192355975217177, guid: 2ac51d6dc94ad3f45a6f05220397828f, type: 3}
+      propertyPath: deathEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: b09282cbf64ca4b45838e86e7623c003, type: 2}
+    - target: {fileID: 6469192355975217177, guid: 2ac51d6dc94ad3f45a6f05220397828f, type: 3}
       propertyPath: bodyCenterTransform
       value: 
       objectReference: {fileID: 7611911316434708819}

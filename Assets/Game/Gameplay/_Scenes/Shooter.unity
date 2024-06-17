@@ -8300,10 +8300,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fee04ac5ffe7a24d9800716ce564c4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicEvent: {fileID: 0}
+  musicEvent: {fileID: 11400000, guid: d709984237bcfd046ad66b8786dd91e5, type: 2}
   mainCamera: {fileID: 609968027}
   gameplayUI: {fileID: 57968696}
-  defeatEvent: {fileID: 0}
+  defeatEvent: {fileID: 11400000, guid: 4bdb15bc78ec79e4897801f73b6f6271, type: 2}
   playerController: {fileID: 708882680}
   waveController: {fileID: 2097766449}
   enemyPoolController: {fileID: 2004809858}

@@ -52,6 +52,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 328
   attackRadius: 5
+  impactEvent: {fileID: 11400000, guid: ac653bfc29e92ca4badc5636144a7f04, type: 2}
   impactRockParticleGO: {fileID: 1758473627833946668, guid: 9b21333b068a5084ba09535839bee3c8, type: 3}
   particleDuration: 1
 --- !u!33 &33546315007907412

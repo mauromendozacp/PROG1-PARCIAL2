@@ -22,7 +22,12 @@ public class GameplayController : MonoBehaviour
         StartControllers();
         gameplayUI.Init(onEnablePlayerInput: () => playerController.EnableInput(true));
 
-        waveController.StartWave();
+        GameManager.Instance.LoadingManager.SetFinishTransitionCallback(
+            callback: () =>
+            {
+                playerController.EnableInput(true);
+                waveController.StartWave();
+            });
     }
 
     private void StartControllers()

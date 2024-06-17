@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class LoadingManager : MonoBehaviour
 {
+    private bool isLoading = false;
     private LoadingUI loadingUI = null;
+
+    private Action onFinishTransition = null;
 
     private static readonly Dictionary<SceneGame, string> sceneNames = new Dictionary<SceneGame, string>()
     {
@@ -22,6 +25,8 @@ public class LoadingManager : MonoBehaviour
 
     public void TransitionScene(SceneGame nextScene, Action onComplete = null)
     {
+        isLoading = true;
+
         loadingUI.ToggleUI(true,
             onComplete: () =>
             {
@@ -32,10 +37,31 @@ public class LoadingManager : MonoBehaviour
                             onSuccess: () =>
                             {
                                 SetActiveScene(nextScene);
-                                loadingUI.ToggleUI(false, onComplete);
+                                loadingUI.ToggleUI(false,
+                                    onComplete: () =>
+                                    {
+                                        onComplete?.Invoke();
+
+                                        onFinishTransition?.Invoke();
+                                        onFinishTransition = null;
+
+                                        isLoading = false;
+                                    });
                             });
                     });
             });
+    }
+
+    public void SetFinishTransitionCallback(Action callback)
+    {
+        if (isLoading)
+        {
+            onFinishTransition += callback;
+        }
+        else
+        {
+            callback.Invoke();
+        }
     }
 
     public void LoadingScene(SceneGame scene, Action onSuccess = null)

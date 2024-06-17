@@ -58,8 +58,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1550035654816380785}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.36458728, y: -0, z: -0, w: 0.9311693}
-  m_LocalPosition: {x: 0, y: 8, z: -8.65}
+  m_LocalRotation: {x: 0.36458725, y: -0, z: -0, w: 0.9311693}
+  m_LocalPosition: {x: 0, y: 8, z: -8.650002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -311,6 +311,7 @@ MonoBehaviour:
   mass: 1
   moveSpeed: 15
   rotationSpeed: 720
+  debug: 0
   attackSpeed: 2
   rangeAttackLayer:
     serializedVersion: 2
@@ -435,7 +436,7 @@ Transform:
   m_GameObject: {fileID: 4640356039453937420}
   serializedVersion: 2
   m_LocalRotation: {x: 0.36458725, y: -0, z: -0, w: 0.9311693}
-  m_LocalPosition: {x: 53.85, y: 11, z: 53.199997}
+  m_LocalPosition: {x: 0, y: 8, z: -8.650002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -649,7 +650,7 @@ MonoBehaviour:
   poolHolder: {fileID: 3078574336761792571}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 137
+    m_Bits: 393
   damage: 1
 --- !u!1001 &8774147757880112129
 PrefabInstance:

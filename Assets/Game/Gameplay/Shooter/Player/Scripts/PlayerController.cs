@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     [SerializeField] private float mass = 1f;
     [SerializeField] private float moveSpeed = 0f;
     [SerializeField] private float rotationSpeed = 0f;
+    [SerializeField] private bool debug = false;
 
     [Header("Attack Settings"), Space]
     [SerializeField] [Range(.5f, 3f)] private float attackSpeed = 0f;
@@ -54,11 +55,10 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
     private void Start()
     {
-        inputController.Init(Attack, Roll, Pause);
-        locomotionController.Init(attackSpeed, ReloadArrow, FireArrow, onEnableInput: () => EnableInput());
-
-        currentLives = lives;
-        currentMoveSpeed = moveSpeed;
+        if (debug)
+        {
+            Setup();
+        }
     }
 
     private void Update()
@@ -78,7 +78,10 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         this.onDeath = onDeath;
         this.onPause = onPause;
 
+        Setup();
         UpdateLives(lives);
+
+        inputController.UpdateInputFSM(FSM_INPUT.DISABLE_ALL);
     }
 
     public void PlayerDefeat()
@@ -89,7 +92,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
     public void EnableInput(bool force = false)
     {
-        if (force || inputController.CurrentInputState == FSM_INPUT.ONLY_UI) return;
+        if (!force && CheckDisableInputStates()) return;
 
         inputController.UpdateInputFSM(FSM_INPUT.ENABLE_ALL);
     }
@@ -123,6 +126,15 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
             currentMoveSpeed = moveSpeed;
             increaseMoveSpeedCoroutine = null;
         }
+    }
+
+    private void Setup()
+    {
+        inputController.Init(Attack, Roll, Pause);
+        locomotionController.Init(attackSpeed, ReloadArrow, FireArrow, onEnableInput: () => EnableInput());
+
+        currentLives = lives;
+        currentMoveSpeed = moveSpeed;
     }
 
     private void ApplyGravity()
@@ -235,6 +247,11 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     {
         currentLives = Mathf.Clamp(newLives, 0, lives);
         onUpdateLives?.Invoke(currentLives, lives);
+    }
+
+    private bool CheckDisableInputStates()
+    {
+        return inputController.CurrentInputState == FSM_INPUT.ONLY_UI || inputController.CurrentInputState == FSM_INPUT.DISABLE_ALL;
     }
 
     public void RecieveDamage(int damage)

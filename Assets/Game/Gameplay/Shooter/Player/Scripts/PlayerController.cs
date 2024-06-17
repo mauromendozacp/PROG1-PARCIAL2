@@ -44,7 +44,6 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
     private int currentLives = 0;
     private float currentMoveSpeed = 0f;
 
-    private bool defeat = false;
     private bool invinsible = false;
 
     private IEnumerator increaseMoveSpeedCoroutine = null;
@@ -64,7 +63,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
     private void Update()
     {
-        if (CheckIsDead() || defeat) return;
+        if (CheckIsDead()) return;
 
         ApplyGravity();
         Movement();
@@ -84,8 +83,8 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
     public void PlayerDefeat()
     {
-        defeat = true;
         EnableInputOnlyUI();
+        locomotionController.UpdateIdleRunAnimation(0f);
     }
 
     public void EnableInput(bool force = false)

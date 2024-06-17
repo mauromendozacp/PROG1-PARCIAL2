@@ -6,6 +6,7 @@ public class GameplayController : MonoBehaviour
     [SerializeField] private AudioEvent musicEvent = null;
     [SerializeField] private Camera mainCamera = null;
     [SerializeField] private GameplayUI gameplayUI = null;
+    [SerializeField] private AudioEvent defeatEvent = null;
 
     [Header("Controllers Settings")]
     [SerializeField] private PlayerController playerController = null;
@@ -50,6 +51,8 @@ public class GameplayController : MonoBehaviour
         playerController.PlayerDefeat();
         waveController.StopWave();
         enemyPoolController.EnemyList.ForEach(e => e.SetWinState());
+
+        GameManager.Instance.AudioManager.PlayAudio(defeatEvent);
     }
 
     private void PlayerWin()

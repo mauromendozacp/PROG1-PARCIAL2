@@ -91,6 +91,8 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
 
     public virtual void SetWinState()
     {
+        if (state == FSM_ENEMY.DEATH) return;
+
         state = FSM_ENEMY.WIN;
 
         mainTarget = null;

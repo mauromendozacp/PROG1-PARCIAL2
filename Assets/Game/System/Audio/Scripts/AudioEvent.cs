@@ -18,19 +18,11 @@ public class AudioEvent : ScriptableObject
     [SerializeField] private AUDIO_TYPE audioType = default;
     [SerializeField] private SOUND_TYPE soundType = default;
     [SerializeField] private AudioClip clip = null;
-    [SerializeField] private bool useRandomClip = false;
-    [SerializeField] private AudioClip[] clips = null;
 
     [SerializeField] [Range(0, 1)] private float volume = 1.0f;
 
-    [SerializeField] private float pitch = 1.0f;
-    [SerializeField] private bool useRandomPitch = false;
-    [SerializeField] private float minPitch = 0.0f;
-    [SerializeField] private float maxPitch = 1.0f;
-
     public AUDIO_TYPE AudioType { get => audioType; }
     public SOUND_TYPE SoundType { get => soundType; }
-    public AudioClip Clip { get => useRandomClip ? clips[Random.Range(0, clips.Length)] : clip; }
+    public AudioClip Clip { get => clip; }
     public float Volume { get => volume; }
-    public float Pitch { get => useRandomPitch ? Random.Range(minPitch, maxPitch) : pitch; }
 }

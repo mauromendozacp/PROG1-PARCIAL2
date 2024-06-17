@@ -6,7 +6,7 @@ public class Rock : MonoBehaviour
 {
     [SerializeField] private LayerMask impactLayer = default;
     [SerializeField] private float attackRadius = 0f;
-
+    [SerializeField] private AudioEvent impactEvent = null;
     [SerializeField] private GameObject impactRockParticleGO = null;
     [SerializeField] private float particleDuration = 0f;
 
@@ -73,6 +73,8 @@ public class Rock : MonoBehaviour
                 recieveDamage.RecieveDamage(damage);
             }
         }
+
+        GameManager.Instance.AudioManager.PlayAudio(impactEvent);
     }
 
     private void CreateImpactRockParticle()

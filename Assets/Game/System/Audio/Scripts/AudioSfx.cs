@@ -12,7 +12,6 @@ public class AudioSfx : MonoBehaviour
     public void SetAudioValues(AudioEvent audioEvent)
     {
         audioSource.volume = audioEvent.Volume;
-        audioSource.pitch = audioEvent.Pitch;
         
         switch (audioEvent.SoundType)
         {

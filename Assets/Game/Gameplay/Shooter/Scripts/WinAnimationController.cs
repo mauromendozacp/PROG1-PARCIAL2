@@ -11,6 +11,7 @@ public class WinAnimationController : MonoBehaviour
     [SerializeField] private float focusRuneExtraTime = 0f;
     [SerializeField] private CinemachineVirtualCamera virtualCamera = null;
     [SerializeField] private Vector3 offset = Vector3.zero;
+    [SerializeField] private AudioEvent winEvent = null;
 
     [SerializeField] private float radius = 0f;
     [SerializeField] private int spawnCount = 0;
@@ -37,6 +38,8 @@ public class WinAnimationController : MonoBehaviour
 
                 yield return new WaitForEndOfFrame();
             }
+
+            GameManager.Instance.AudioManager.PlayAudio(winEvent);
 
             for (int i = 0; i < spawnCount; i++)
             {

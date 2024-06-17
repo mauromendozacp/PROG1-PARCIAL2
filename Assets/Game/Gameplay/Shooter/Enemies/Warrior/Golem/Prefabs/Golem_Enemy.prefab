@@ -949,9 +949,9 @@ MonoBehaviour:
     m_Bits: 320
   lives: 5
   healthBarSlider: {fileID: 2667622725147795214}
-  attackEvent: {fileID: 0}
+  attackEvent: {fileID: 11400000, guid: 1cfbb95f1c0d2d34784754eaa5d7d209, type: 2}
   hurtEvent: {fileID: 0}
-  deathEvent: {fileID: 0}
+  deathEvent: {fileID: 11400000, guid: bbd09e0ae0e288d448d5bf57d431f104, type: 2}
   locomotionController: {fileID: 1143208510679596365}
   bodyCenterTransform: {fileID: 6252656902170926468}
   rock: {fileID: 8647641702684857135}

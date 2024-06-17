@@ -363,8 +363,8 @@ MonoBehaviour:
   mainCamera: {fileID: 5553771788934677829}
   reloadArrowEvent: {fileID: 11400000, guid: beccf12c9b484df4aa51b97cfffc9bba, type: 2}
   fireArrowEvent: {fileID: 11400000, guid: adbed66d9d27a6545bba0b42d27e6c29, type: 2}
-  hurtEvent: {fileID: 0}
-  deathEvent: {fileID: 0}
+  hurtEvent: {fileID: 11400000, guid: 3df3cfbc804721d4d8dc2ce1b16bd738, type: 2}
+  deathEvent: {fileID: 11400000, guid: adbc2a6d3d48ce24cb037126a57494eb, type: 2}
 --- !u!114 &3308152024111482864
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public abstract class ConsumableItem : MonoBehaviour
     {
         if (Utils.CheckLayerInMask(playerLayer, other.gameObject.layer))
         {
-            GameManager.Instance.AudioManager.PlayAudio(consumeEvent);
+            GameManager.Instance.AudioManager.PlayAudio(consumeEvent, transform.position);
 
             OnTriggerEvent(other);
             onTrigger?.Invoke();

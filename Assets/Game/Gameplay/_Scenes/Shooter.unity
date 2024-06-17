@@ -8303,6 +8303,7 @@ MonoBehaviour:
   musicEvent: {fileID: 0}
   mainCamera: {fileID: 609968027}
   gameplayUI: {fileID: 57968696}
+  defeatEvent: {fileID: 0}
   playerController: {fileID: 708882680}
   waveController: {fileID: 2097766449}
   enemyPoolController: {fileID: 2004809858}
@@ -13576,6 +13577,7 @@ MonoBehaviour:
   focusRuneExtraTime: 2
   virtualCamera: {fileID: 708882681}
   offset: {x: 0, y: 0, z: -7}
+  winEvent: {fileID: 11400000, guid: 3f564e623c25f0441b487ca320d3e9c6, type: 2}
   radius: 2.5
   spawnCount: 10
   spawnDelay: 0.25

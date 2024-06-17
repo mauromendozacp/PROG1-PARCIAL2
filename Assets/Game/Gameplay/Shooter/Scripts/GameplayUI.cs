@@ -88,6 +88,7 @@ public class GameplayUI : MonoBehaviour
         loseBackToMenuBtn.interactable = false;
 
         GameManager.Instance.ChangeScene(SceneGame.Shooter);
+        GameManager.Instance.AudioManager.ToggleMusic(true);
     }
 
     private void BackToMenu()
@@ -101,6 +102,7 @@ public class GameplayUI : MonoBehaviour
         winBackToMenuBtn.interactable = false;
 
         GameManager.Instance.ChangeScene(SceneGame.Menu);
+        GameManager.Instance.AudioManager.ToggleMusic(true);
         ToggleTimeScale(true);
     }
 

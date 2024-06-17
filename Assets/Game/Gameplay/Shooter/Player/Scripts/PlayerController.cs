@@ -214,6 +214,8 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
     private void Pause()
     {
+        GameManager.Instance.AudioManager.ToggleMusic(false);
+
         EnableInputOnlyUI();
         onPause?.Invoke();
     }

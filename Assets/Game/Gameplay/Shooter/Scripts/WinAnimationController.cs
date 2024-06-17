@@ -23,6 +23,12 @@ public class WinAnimationController : MonoBehaviour
         virtualCamera.Follow = null;
         virtualCamera.LookAt = null;
 
+        GameManager.Instance.AudioManager.StopCurrentMusic(
+            onSuccess: () =>
+            {
+                GameManager.Instance.AudioManager.PlayAudio(winEvent);
+            });
+
         StartCoroutine(FocusRuneTransitionCoroutine());
         IEnumerator FocusRuneTransitionCoroutine()
         {
@@ -38,8 +44,6 @@ public class WinAnimationController : MonoBehaviour
 
                 yield return new WaitForEndOfFrame();
             }
-
-            GameManager.Instance.AudioManager.PlayAudio(winEvent);
 
             for (int i = 0; i < spawnCount; i++)
             {

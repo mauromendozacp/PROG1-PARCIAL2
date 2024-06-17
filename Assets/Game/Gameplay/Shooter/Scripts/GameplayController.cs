@@ -21,7 +21,12 @@ public class GameplayController : MonoBehaviour
         GameManager.Instance.AudioManager.PlayAudio(musicEvent);
 
         StartControllers();
-        gameplayUI.Init(onEnablePlayerInput: () => playerController.EnableInput(true));
+        gameplayUI.Init(
+            onEnablePlayerInput: () =>
+            {
+                playerController.EnableInput(true);
+                GameManager.Instance.AudioManager.ToggleMusic(true);
+            });
 
         GameManager.Instance.LoadingManager.SetFinishTransitionCallback(
             callback: () =>

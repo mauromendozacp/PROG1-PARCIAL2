@@ -105,6 +105,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  consumeEvent: {fileID: 11400000, guid: 5140fe1f91477b149a526e3343c86356, type: 2}
 --- !u!1001 &9035689556988442862
 PrefabInstance:
   m_ObjectHideFlags: 0

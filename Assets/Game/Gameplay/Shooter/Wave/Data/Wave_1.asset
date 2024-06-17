@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2624a262641d649a383d681884224a, type: 3}
   m_Name: Wave_1
   m_EditorClassIdentifier: 
-  availableEnemies: 00000000
+  availableEnemies: 0000000002000000
   enemyCount: 12
-  spawnDelay: 3
+  spawnDelay: 4
   startWaveDelay: 5

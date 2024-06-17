@@ -52,6 +52,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ConsumableItem_Potion
       objectReference: {fileID: 0}
+    - target: {fileID: 9016678585365143534, guid: 1cf3c5112ae8c874d87072f5d3b45c25, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8113208
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016678585365143534, guid: 1cf3c5112ae8c874d87072f5d3b45c25, type: 3}
+      propertyPath: m_Color.g
+      value: 0.30588993
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016678585365143534, guid: 1cf3c5112ae8c874d87072f5d3b45c25, type: 3}
+      propertyPath: m_Color.r
+      value: 0.08036668
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

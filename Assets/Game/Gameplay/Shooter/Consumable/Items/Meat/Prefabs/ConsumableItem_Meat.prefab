@@ -56,6 +56,18 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 9016678585365143534, guid: 1cf3c5112ae8c874d87072f5d3b45c25, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016678585365143534, guid: 1cf3c5112ae8c874d87072f5d3b45c25, type: 3}
+      propertyPath: m_Color.g
+      value: 0.09748428
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016678585365143534, guid: 1cf3c5112ae8c874d87072f5d3b45c25, type: 3}
+      propertyPath: m_Color.r
+      value: 0.8018868
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5663106450050727551, guid: 1cf3c5112ae8c874d87072f5d3b45c25, type: 3}
     m_RemovedGameObjects: []

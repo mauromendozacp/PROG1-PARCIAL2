@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class ConsumableItem : MonoBehaviour
 {
     [SerializeField] private LayerMask playerLayer = default;
+    [SerializeField] private AudioEvent consumeEvent = null;
 
     private Action onTrigger = null;
 
@@ -12,6 +13,8 @@ public abstract class ConsumableItem : MonoBehaviour
     {
         if (Utils.CheckLayerInMask(playerLayer, other.gameObject.layer))
         {
+            GameManager.Instance.AudioManager.PlayAudio(consumeEvent);
+
             OnTriggerEvent(other);
             onTrigger?.Invoke();
         }

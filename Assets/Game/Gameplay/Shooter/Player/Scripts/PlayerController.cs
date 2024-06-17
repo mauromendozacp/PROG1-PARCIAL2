@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
     private bool invinsible = false;
 
-    private IEnumerator increaseMoveSpeedCoroutine = null;
+    private IEnumerator increaseAttackSpeedCoroutine = null;
 
     private Action onDeath = null;
     private Action onPause = null;
@@ -107,24 +107,24 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
         UpdateLives(currentLives + increaseLives);
     }
 
-    public void IncreaseMoveSpeed(float increaseSpeedPorc, float duration)
+    public void IncreaseAttackSpeed(float increaseSpeedPorc, float duration)
     {
-        if (increaseMoveSpeedCoroutine != null)
+        if (increaseAttackSpeedCoroutine != null)
         {
-            StopCoroutine(increaseMoveSpeedCoroutine);
+            StopCoroutine(increaseAttackSpeedCoroutine);
         }
 
-        increaseMoveSpeedCoroutine = IncreaseMoveSpeedCoroutine();
-        StartCoroutine(increaseMoveSpeedCoroutine);
+        increaseAttackSpeedCoroutine = IncreaseAttackSpeedCoroutine();
+        StartCoroutine(increaseAttackSpeedCoroutine);
 
-        IEnumerator IncreaseMoveSpeedCoroutine()
+        IEnumerator IncreaseAttackSpeedCoroutine()
         {
-            currentMoveSpeed = moveSpeed * (increaseSpeedPorc + 100) / 100;
+            locomotionController.SetAttackSpeed(attackSpeed * (increaseSpeedPorc + 100) / 100);
 
             yield return new WaitForSeconds(duration);
 
-            currentMoveSpeed = moveSpeed;
-            increaseMoveSpeedCoroutine = null;
+            locomotionController.SetAttackSpeed(attackSpeed);
+            increaseAttackSpeedCoroutine = null;
         }
     }
 

@@ -24,11 +24,16 @@ public class PlayerLocomotionController : MonoBehaviour
 
     public void Init(float attackSpeed, Action onReloadArrow, Action onFireArrow, Action onEnableInput)
     {
-        animator.SetFloat(attackSpeedKey, attackSpeed);
+        SetAttackSpeed(attackSpeed);
 
         this.onReloadArrow = onReloadArrow;
         this.onFireArrow = onFireArrow;
         this.onEnableInput = onEnableInput;
+    }
+
+    public void SetAttackSpeed(float attackSpeed)
+    {
+        animator.SetFloat(attackSpeedKey, attackSpeed);
     }
 
     public void UpdateIdleRunAnimation(float speed)

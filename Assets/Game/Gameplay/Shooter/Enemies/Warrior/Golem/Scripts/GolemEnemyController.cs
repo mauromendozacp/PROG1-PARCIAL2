@@ -57,7 +57,7 @@ public class GolemEnemyController : WarriorEnemyController
 
         golemLocomotionController.ThrowRockAnimation();
 
-        GameManager.Instance.AudioManager.PlayAudio(throwRockEvent);
+        GameManager.Instance.AudioManager.PlayAudio(throwRockEvent, transform.position);
     }
 
     private void SpawnRockToTarget()

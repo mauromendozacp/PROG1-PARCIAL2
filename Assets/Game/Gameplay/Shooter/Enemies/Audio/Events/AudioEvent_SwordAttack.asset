@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AudioEvent_SwordAttack
   m_EditorClassIdentifier: 
   audioType: 0
+  soundType: 1
   clip: {fileID: 8300000, guid: fac9be61a2e7f2344886eafdd702c13a, type: 3}
   useRandomClip: 0
   clips: []

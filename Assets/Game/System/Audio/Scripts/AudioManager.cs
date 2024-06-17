@@ -33,14 +33,14 @@ public class AudioManager : MonoBehaviour
     private AudioEvent currentMusicEvent = null;
     private bool isStopingMusic = false;
 
-    public const string masterMixerName = "Master";
-    public const string musicMixerName = "Music";
-    public const string sfxMixerName = "Sfx";
-    public const string musicVolumeParameter = "musicVolume";
-    public const string sfxVolumeParameter = "sfxVolume";
+    private const string masterMixerName = "Master";
+    private const string musicMixerName = "Music";
+    private const string sfxMixerName = "Sfx";
+    private const string musicVolumeParameter = "musicVolume";
+    private const string sfxVolumeParameter = "sfxVolume";
 
-    public const float defaultMaxMixerVolume = 0.0f;
-    public const float defaultMinMixerVolume = -40.0f;
+    private const float defaultMaxMixerVolume = 0.0f;
+    private const float defaultMinMixerVolume = -40.0f;
 
     public float MusicVolume { get => musicVolume; }
     public float SfxVolume { get => sfxVolume; }
@@ -64,7 +64,7 @@ public class AudioManager : MonoBehaviour
         musicEnabled = true;
     }
 
-    public void PlayAudio(AudioEvent audioEvent)
+    public void PlayAudio(AudioEvent audioEvent, Vector3 position = new Vector3())
     {
         if (audioEvent == null) return;
 
@@ -80,11 +80,12 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void PlaySFX(AudioEvent audioEvent)
+    private void PlaySFX(AudioEvent audioEvent, Vector3 position = new Vector3())
     {
         if (!sfxEnabled) return;
 
         AudioSfx audio = sfxAudioSourcesPool.Get();
+        audio.transform.position = position;
         audio.SetAudioValues(audioEvent);
 
         ToggleSFX(sfxEnabled);

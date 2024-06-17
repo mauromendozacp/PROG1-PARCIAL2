@@ -13,6 +13,19 @@ public class AudioSfx : MonoBehaviour
     {
         audioSource.volume = audioEvent.Volume;
         audioSource.pitch = audioEvent.Pitch;
+        
+        switch (audioEvent.SoundType)
+        {
+            case AudioEvent.SOUND_TYPE.MONO:
+                audioSource.spatialBlend = 0f;
+
+                break;
+            case AudioEvent.SOUND_TYPE.STEREO:
+                audioSource.spatialBlend = 1f;
+
+                break;
+        }
+
         audioSource.PlayOneShot(audioEvent.Clip);
     }
 

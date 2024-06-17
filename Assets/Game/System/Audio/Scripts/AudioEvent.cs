@@ -9,7 +9,14 @@ public class AudioEvent : ScriptableObject
         MUSIC
     }
 
-    [SerializeField] private AUDIO_TYPE audioType = AUDIO_TYPE.SFX;
+    public enum SOUND_TYPE
+    {
+        MONO,
+        STEREO
+    }
+
+    [SerializeField] private AUDIO_TYPE audioType = default;
+    [SerializeField] private SOUND_TYPE soundType = default;
     [SerializeField] private AudioClip clip = null;
     [SerializeField] private bool useRandomClip = false;
     [SerializeField] private AudioClip[] clips = null;
@@ -22,6 +29,7 @@ public class AudioEvent : ScriptableObject
     [SerializeField] private float maxPitch = 1.0f;
 
     public AUDIO_TYPE AudioType { get => audioType; }
+    public SOUND_TYPE SoundType { get => soundType; }
     public AudioClip Clip { get => useRandomClip ? clips[Random.Range(0, clips.Length)] : clip; }
     public float Volume { get => volume; }
     public float Pitch { get => useRandomPitch ? Random.Range(minPitch, maxPitch) : pitch; }

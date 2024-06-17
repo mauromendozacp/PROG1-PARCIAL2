@@ -101,14 +101,14 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
     {
         state = FSM_ENEMY.ATTACK;
 
-        GameManager.Instance.AudioManager.PlayAudio(attackEvent);
+        GameManager.Instance.AudioManager.PlayAudio(attackEvent, transform.position);
     }
 
     protected virtual void Hurt()
     {
         state = FSM_ENEMY.HURT;
 
-        GameManager.Instance.AudioManager.PlayAudio(hurtEvent);
+        GameManager.Instance.AudioManager.PlayAudio(hurtEvent, transform.position);
     }
 
     protected virtual void Death()
@@ -116,7 +116,7 @@ public abstract class EnemyController : MonoBehaviour, IRecieveDamage
         onKill?.Invoke();
         state = FSM_ENEMY.DEATH;
 
-        GameManager.Instance.AudioManager.PlayAudio(deathEvent);
+        GameManager.Instance.AudioManager.PlayAudio(deathEvent, transform.position);
     }
 
     protected Transform GetFocusTarget()

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AudioEvent_FireArrow
   m_EditorClassIdentifier: 
   audioType: 0
+  soundType: 1
   clip: {fileID: 8300000, guid: 7333bdfc5fc2d1b4285c8a15294b8ca7, type: 3}
   useRandomClip: 0
   clips: []

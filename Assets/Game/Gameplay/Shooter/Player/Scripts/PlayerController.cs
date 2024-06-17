@@ -208,12 +208,12 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
 
     private void ReloadArrow()
     {
-        GameManager.Instance.AudioManager.PlayAudio(reloadArrowEvent);
+        GameManager.Instance.AudioManager.PlayAudio(reloadArrowEvent, transform.position);
     }
 
     private void FireArrow()
     {
-        GameManager.Instance.AudioManager.PlayAudio(fireArrowEvent);
+        GameManager.Instance.AudioManager.PlayAudio(fireArrowEvent, transform.position);
         arrowController.FireArrow(arrowForce, body.transform.forward);
     }
 
@@ -249,14 +249,14 @@ public class PlayerController : MonoBehaviour, IRecieveDamage
             locomotionController.PlayDeadAnimation();
             onDeath?.Invoke();
 
-            GameManager.Instance.AudioManager.PlayAudio(deathEvent);
+            GameManager.Instance.AudioManager.PlayAudio(deathEvent, transform.position);
         }
         else
         {
             locomotionController.PlayRecieveHitAnimation();
             inputController.UpdateInputFSM(FSM_INPUT.MOVEMENT);
 
-            GameManager.Instance.AudioManager.PlayAudio(hurtEvent);
+            GameManager.Instance.AudioManager.PlayAudio(hurtEvent, transform.position);
         }
     }
 }

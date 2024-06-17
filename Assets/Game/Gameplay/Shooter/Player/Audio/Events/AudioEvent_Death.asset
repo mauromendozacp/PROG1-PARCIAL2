@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AudioEvent_Death
   m_EditorClassIdentifier: 
   audioType: 0
+  soundType: 1
   clip: {fileID: 8300000, guid: 193680411604dfc4986f9d841000d60a, type: 3}
   useRandomClip: 0
   clips: []

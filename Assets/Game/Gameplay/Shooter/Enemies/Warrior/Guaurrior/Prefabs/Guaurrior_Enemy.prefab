@@ -2583,6 +2583,22 @@ PrefabInstance:
       value: Guaurrior_Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 6469192355975217177, guid: 2ac51d6dc94ad3f45a6f05220397828f, type: 3}
+      propertyPath: lives
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469192355975217177, guid: 2ac51d6dc94ad3f45a6f05220397828f, type: 3}
+      propertyPath: speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469192355975217177, guid: 2ac51d6dc94ad3f45a6f05220397828f, type: 3}
+      propertyPath: damage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469192355975217177, guid: 2ac51d6dc94ad3f45a6f05220397828f, type: 3}
+      propertyPath: rotationSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469192355975217177, guid: 2ac51d6dc94ad3f45a6f05220397828f, type: 3}
       propertyPath: bodyCenterTransform
       value: 
       objectReference: {fileID: 2047203120012329447}

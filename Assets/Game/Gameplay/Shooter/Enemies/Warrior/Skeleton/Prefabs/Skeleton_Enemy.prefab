@@ -1540,6 +1540,10 @@ PrefabInstance:
       value: Skeleton_Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 6469192355975217177, guid: 2ac51d6dc94ad3f45a6f05220397828f, type: 3}
+      propertyPath: speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469192355975217177, guid: 2ac51d6dc94ad3f45a6f05220397828f, type: 3}
       propertyPath: bodyCenterTransform
       value: 
       objectReference: {fileID: 7611911316434708819}

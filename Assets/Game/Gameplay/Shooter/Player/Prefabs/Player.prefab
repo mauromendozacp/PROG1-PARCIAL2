@@ -307,11 +307,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22efebf2958e69a41926b70f05fbef72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lives: 10
+  lives: 20
   mass: 1
   moveSpeed: 15
   rotationSpeed: 720
-  attackSpeed: 1.5
+  attackSpeed: 2
   rangeAttackLayer:
     serializedVersion: 2
     m_Bits: 136
@@ -319,7 +319,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   arrowController: {fileID: 4874900873115443331}
-  arrowForce: 25
+  arrowForce: 40
   rollCurve:
     serializedVersion: 2
     m_Curve:
@@ -434,8 +434,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4640356039453937420}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.36458728, y: -0, z: -0, w: 0.9311693}
-  m_LocalPosition: {x: 0, y: 8, z: -8.65}
+  m_LocalRotation: {x: 0.36458725, y: -0, z: -0, w: 0.9311693}
+  m_LocalPosition: {x: 53.85, y: 11, z: 53.199997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

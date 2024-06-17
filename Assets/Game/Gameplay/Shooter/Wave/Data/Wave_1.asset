@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Wave_1
   m_EditorClassIdentifier: 
   availableEnemies: 00000000
-  enemyCount: 15
-  spawnDelay: 1.5
+  enemyCount: 12
+  spawnDelay: 3
+  startWaveDelay: 5

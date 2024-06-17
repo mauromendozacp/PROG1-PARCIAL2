@@ -940,14 +940,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c7cd65caaf3824088b8609c45fad13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  speed: 3.5
+  damage: 3
+  speed: 1.5
   distanceToAttack: 1
   rotationSpeed: 45
   attackLayer:
     serializedVersion: 2
     m_Bits: 320
-  lives: 3
+  lives: 5
   healthBarSlider: {fileID: 2667622725147795214}
   attackEvent: {fileID: 0}
   hurtEvent: {fileID: 0}
@@ -955,7 +955,7 @@ MonoBehaviour:
   locomotionController: {fileID: 1143208510679596365}
   bodyCenterTransform: {fileID: 6252656902170926468}
   rock: {fileID: 8647641702684857135}
-  rockDamage: 5
+  rockDamage: 4
   attackRockDistance: 20
   maxHeight: 5
   handTransform: {fileID: 3128427872619621286}

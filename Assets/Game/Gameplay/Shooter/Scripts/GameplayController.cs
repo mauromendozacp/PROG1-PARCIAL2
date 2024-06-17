@@ -52,7 +52,11 @@ public class GameplayController : MonoBehaviour
         waveController.StopWave();
         enemyPoolController.EnemyList.ForEach(e => e.SetWinState());
 
-        GameManager.Instance.AudioManager.PlayAudio(defeatEvent);
+        GameManager.Instance.AudioManager.StopCurrentMusic(
+            onSuccess: () =>
+            {
+                GameManager.Instance.AudioManager.PlayAudio(defeatEvent);
+            });
     }
 
     private void PlayerWin()

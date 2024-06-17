@@ -14,11 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioType: 0
   soundType: 0
-  clip: {fileID: 0}
-  useRandomClip: 0
-  clips: []
+  clip: {fileID: 8300000, guid: 3c5ef519de2fca2468f8b4459ddd3782, type: 3}
   volume: 1
-  pitch: 1
-  useRandomPitch: 0
-  minPitch: 0
-  maxPitch: 1

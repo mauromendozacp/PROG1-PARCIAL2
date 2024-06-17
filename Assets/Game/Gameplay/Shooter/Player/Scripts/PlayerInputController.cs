@@ -34,7 +34,7 @@ public class PlayerInputController : MonoBehaviour
         inputAction = new PlayerInputActions();
 
         inputAction.Player.Fire.performed += OnFire;
-        inputAction.Player.Roll.performed += OnRoll;
+        //inputAction.Player.Roll.performed += OnRoll; BUG
         inputAction.Player.Pause.performed += OnPause;
 
         UpdateInputFSM(FSM_INPUT.ENABLE_ALL);

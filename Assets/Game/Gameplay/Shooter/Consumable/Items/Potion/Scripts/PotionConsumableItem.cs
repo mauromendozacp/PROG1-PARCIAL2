@@ -22,7 +22,7 @@ public class PotionConsumableItem : ConsumableItem
     {
         if (other.TryGetComponent(out PlayerController playerController))
         {
-            playerController.IncreaseMoveSpeed(increaseSpeedPorc, duration);
+            playerController.IncreaseAttackSpeed(increaseSpeedPorc, duration);
         }
     }
 }
